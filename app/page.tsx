@@ -1,6 +1,10 @@
+import Autoslides from "@/components/Autoslide/Autoslide"
+
 const page = () => {
   return (
-    <div>page</div>
+    <div>
+      <Autoslides />
+    </div>
   )
 }
 export default page
