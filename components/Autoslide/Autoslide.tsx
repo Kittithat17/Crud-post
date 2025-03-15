@@ -7,7 +7,7 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
 export default function Autoslides() {
   return (
-    <div className="flex justify-center ">
+    <div className="flex justify-center">
       <Swiper
         spaceBetween={0}
         centeredSlides={true}
@@ -18,7 +18,7 @@ export default function Autoslides() {
         pagination={{ clickable: true }}
         navigation={false}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper w-full  h-[810px] brightness-50 object-cover" // ปรับขนาด Swiper
+        className="mySwiper max-w-11/12 h-[650px] brightness-50 object-cover" // ปรับขนาด Swiper
       >
         <SwiperSlide>
           <img src="/images/slide1.jpeg" alt="Slide 1" className="w-full h-full object-cover" />
@@ -33,3 +33,4 @@ export default function Autoslides() {
     </div>
   );
 }
+
