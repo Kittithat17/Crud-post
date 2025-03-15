@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Button } from "../ui/button"
 import { SignedIn } from "@clerk/nextjs"
 
+
 const CartSign = () => {
   return (
     <div className="flex items-center gap-3">
@@ -14,7 +15,7 @@ const CartSign = () => {
           </span>
         </Link>
       </Button>
-
+    
 
     <SignedIn>
     <Button asChild variant={"ghost"} size={'lg'}>
