@@ -31,7 +31,9 @@ const Signinbut = () => {
               <Link href="/orderhistory">Order History</Link>
             </DropdownMenuItem>
 
-            <DropdownMenuItem>Admin</DropdownMenuItem>
+            <DropdownMenuItem><Link href="/admin">Admin</Link>
+             
+              </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Logout />
