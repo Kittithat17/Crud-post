@@ -16,7 +16,7 @@ export default function    AdminMenu() {
   const pathname = usePathname(); // ตรวจสอบ path ปัจจุบัน
 
   return (
-    <nav className="flex space-x-2 p-4  bg-white justify-between mx-20 ">
+    <nav className="flex space-x-2  py-6  bg-white justify-between px-32 ">
       {tabs.map((tab) => (
         
         <Button
