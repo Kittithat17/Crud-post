@@ -13,8 +13,10 @@ const Logo = () => {
           priority={true}
         />
       </Link>
-      <Link href="/">
-        <span className="text-2xl font-bold uppercase">Sneaker</span>
+      <Link href="/" className="text-2xl font-bold">
+        Sneaker<span style={{ color: "red" }}>X</span>
+
+
       </Link>
     </div>
   );
