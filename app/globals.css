@@ -124,3 +124,6 @@
     @apply bg-background text-foreground;
   }
 }
+.swiper-pagination-bullet-active {
+  background-color: rgb(0, 0, 0) ;
+}

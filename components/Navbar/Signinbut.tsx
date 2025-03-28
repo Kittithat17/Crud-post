@@ -31,15 +31,16 @@ const Signinbut = () => {
               <Link href="/orderhistory">Order History</Link>
             </DropdownMenuItem>
 
-            <DropdownMenuItem><Link href="/admin/overview">Admin</Link>
-             
-              </DropdownMenuItem>
-
-              <DropdownMenuItem><Link href="/address">Address</Link>
-             
-              </DropdownMenuItem>
-            <DropdownMenuSeparator />
             <DropdownMenuItem>
+              <Link href="/admin/overview">Admin</Link>
+            </DropdownMenuItem>
+
+            <DropdownMenuItem>
+              <Link href="/address">Address</Link>
+            </DropdownMenuItem>
+
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className=" cursor-pointer">
               <Logout />
             </DropdownMenuItem>
           </DropdownMenuContent>

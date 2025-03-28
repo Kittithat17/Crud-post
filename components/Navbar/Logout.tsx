@@ -2,8 +2,8 @@ import { SignedIn, SignOutButton } from "@clerk/nextjs"
 
 const Logout = () => {
   return (
-    <SignedIn>
-        <SignOutButton redirectUrl="/">
+    <SignedIn >
+        <SignOutButton redirectUrl="/" >
       Logout
     </SignOutButton>
 
