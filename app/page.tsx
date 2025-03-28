@@ -30,7 +30,7 @@ const page = () => {
           </button>
         ))}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4 center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-15 p-4 center">
         <Cardd/>
         <Cardd/>
         <Cardd/>

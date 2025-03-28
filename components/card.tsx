@@ -1,11 +1,13 @@
 import React from 'react'
+import Addcartbut from './Addproductbutton/Addcartbut'
 
-const card = () => {
+
+const Cardd = () => {
   return (
-    <div className ="bg-black opacity-30 h-[180px] w-[140px] rounded-xl text-amber-100">
-        
+    <div className ="bg-gray-200  h-[180px] w-[140px] rounded-md">
+        <Addcartbut/>
     </div>
   )
 }
 
-export default card
+export default Cardd
