@@ -1,6 +1,7 @@
 "use client"
 import Autoslides from "@/components/Autoslide/Autoslide"
 import Cardd from "../components/card"
+import CategoryCards from "@/components/Navbar/CategoryCards"
 //import { useEffect, useState } from "react"
 
 
@@ -18,7 +19,7 @@ const page = () => {
   return (
     <div className="flex flex-col items-center">
       <Autoslides />
-      
+      <CategoryCards/>
       <h1 className=" uppercase text-center font-bold pt-12" style={{ fontSize: "52px" }}>best sneaker collection</h1>
       <p className=" text-sm text-center font-medium text-stone-400 max-w-[480px] pt-4">iafjlkjsfjsdfsfjslfjl;sajflsjfals;fjaslfasf;alsfaslkfkfdlkfkldnfkdnfldfndnflfdfnkdlf
         kdfldflkdjflkdjfldjfldjfkdfjddjfldfdfdfdf;lsdfl;kdsfldks;fkds;lfks;kf
