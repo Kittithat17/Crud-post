@@ -18,7 +18,8 @@ export default function Autoslides() {
         pagination={{ clickable: true }}
         navigation={false}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper w-[1500px] h-[800px] brightness-95 object-cover" // ปรับขนาด Swiper
+        className="mySwiper w-[1150px] h-[550px] brightness-95 object-cover" // ปรับขนาด Swiper
+        // className="mySwiper w-7xl h-full brightness-95 object-cover" // ปรับขนาด Swiper
       >
         <SwiperSlide>
           <img src="/images/slide3.jpg" alt="Slide 1" className="w-full h-full " />
