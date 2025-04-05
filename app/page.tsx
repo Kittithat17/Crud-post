@@ -26,7 +26,7 @@ const page = () => {
 
       <CategoryCards/>
       <div className="w-full py-10 px-4 text-center ">
-        <h2 className="text-md font-black ">JOIN THE SNEAKER<span style={{ color: "red" }}>X</span> COLLECTION</h2>
+        <h2 className="text-md font-semibold">JOIN THE SNEAKER<span style={{ color: "red" }}>X</span> COLLECTION</h2>
         <h1 className="  font-black uppercase py-6" style={{ fontSize: "70px" }}>Best sneaker collection</h1>
         <p className="text-center text-md font-stretch-semi-condensed mb-6">
       Experience the ultimate in comfort and style with our premium sneaker collection.
