@@ -17,11 +17,11 @@ const page = () => {
 
   ]
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col">
       <Autoslides />
       <CategoryCards/>
       <h1 className=" uppercase text-center font-bold pt-12" style={{ fontSize: "52px" }}>best sneaker collection</h1>
-      <p className=" text-sm text-center font-medium text-stone-400 max-w-[480px] pt-4">iafjlkjsfjsdfsfjslfjl;sajflsjfals;fjaslfasf;alsfaslkfkfdlkfkldnfkdnfldfndnflfdfnkdlf
+      <p className=" items-center text-sm  font-medium text-stone-400 max-w-[480px] pt-4">iafjlkjsfjsdfsfjslfjl;sajflsjfals;fjaslfasf;alsfaslkfkfdlkfkldnfkdnfldfndnflfdfnkdlf
         kdfldflkdjflkdjfldjfldjfkdfjddjfldfdfdfdf;lsdfl;kdsfldks;fkds;lfks;kf
       </p>
       <div className="flex justify-center gap-4 mt-8 ">
