@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Emptycart = () => {
   return ( 
-    <div className="flex justify-center items-center mt-30"> {/*ต้องเพิ่ม function เวลากดadd to cartด้วย*/} 
+    <div className="flex justify-center items-center mt-20"> {/*ต้องเพิ่ม function เวลากดadd to cartด้วย*/} 
       <div className="w-full max-w-md border-2 rounded-lg shadow-sm p-6 md:p-8 bg-white">
         {/* Empty cart content */}
         <div className="flex flex-col items-center">

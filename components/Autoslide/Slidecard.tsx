@@ -20,7 +20,7 @@ const products = [
   {
     id: 3,
     name: "Air Max 90",
-    image: "/images/ddddd.jpg",
+    image: "https://brand.assets.adidas.com/image/upload/f_auto,q_auto:best,fl_lossy/if_w_gt_600,w_600/02_originals_ss25_the_original_introduce_catlp_tc_samba_m_2a75966b55.jpg",
     
   },
   {
@@ -55,7 +55,7 @@ export const Slidecard = () => {
         } else if (window.innerWidth < 1024) {
           setVisibleProducts(2);
         } else {
-          setVisibleProducts(3);
+          setVisibleProducts(4);
         }
       }
     };
@@ -112,7 +112,7 @@ export const Slidecard = () => {
           {products.map((product) => (
             <div
               key={product.id}
-              className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 px-2"
+              className="w-full sm:w-1/2 lg:w-1/4 flex-shrink-0 px-2"
             >
 
                 <div className="bg-[#f5f5f5] rounded-lg overflow-hidden mb-3">
