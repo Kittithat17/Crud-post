@@ -7,13 +7,13 @@ const categories = [
     {
       id: 1,
       name: "Running",
-      image: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/99486859-0ff3-46b4-949b-2d16af2ad421/custom-nike-dunk-high-by-you-shoes.png",
+      image: "/images/dddd.jpg",
       link: "#"
     },
     {
       id: 2,
       name: "Basketball",
-      image: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/99486859-0ff3-46b4-949b-2d16af2ad421/custom-nike-dunk-high-by-you-shoes.png",
+      image: "/images/ddddd.jpg",
       link: "#"
     },
     {
@@ -26,9 +26,9 @@ const categories = [
 
 const CategoryCards = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-32 py-8">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-28 py-8">
       {categories.map((category) => (
-        <div key={category.id} className="relative h-96 overflow-hidden group ">
+        <div key={category.id} className="relative h-[500] overflow-hidden group ">
           <Image
             src={category.image}
             alt={category.name}
