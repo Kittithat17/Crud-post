@@ -6,19 +6,19 @@ import Link from "next/link";
 const categories = [
     {
       id: 1,
-      name: "Running",
+      name: "Now",
       image: "/images/dddd.jpg",
       link: "#"
     },
     {
       id: 2,
-      name: "Basketball",
-      image: "/images/ddddd.jpg",
+      name: "Now",
+      image: "https://static.nike.com/a/images/f_auto/dpr_3.0,cs_srgb/h_400,c_limit/bce4329e-4d2d-4558-8276-655299b5eb42/nike-just-do-it.jpg",
       link: "#"
     },
     {
       id: 3,
-      name: "Basketball",
+      name: "Now",
       image: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/99486859-0ff3-46b4-949b-2d16af2ad421/custom-nike-dunk-high-by-you-shoes.png",
       link: "#"
     },
