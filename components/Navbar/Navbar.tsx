@@ -11,7 +11,7 @@ import Signinbut from "./Signinbut";
 
 const Navbar = () => {
   return (
-    <nav className=" w-full  ">
+       <nav className="sticky top-0 z-50 w-full bg-background">
       <div className="flex  py-3 px-26 justify-between">
         <div className="flex gap-6">
           {/* Sideleft */}
@@ -20,9 +20,9 @@ const Navbar = () => {
           <Logo />
         </div>
 
-        <Searchbar />
 
         <div className="flex gap-7">
+        <Searchbar />
           <DarkModee />
           <CartSign />
           <Signinbut />
