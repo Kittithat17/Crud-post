@@ -121,6 +121,7 @@ const mensShoes: ProductProps[] = [
     price: 4900,
     image: "/images/ff.webp",
     colors: 3,
+    isNew: true
   },
 ];
 

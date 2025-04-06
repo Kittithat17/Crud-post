@@ -31,16 +31,20 @@ export function ProductGrid({
   useEffect(() => {
     let result = [...products];
 
-    // Filter by brand only (ignore other filters)
+    // Filter by brand
     if (filters.brand && filters.brand.length > 0) {
       result = result.filter(product => {
-        const isNikeSportswear = !product.name.toLowerCase().includes("jordan");
-        const isJordan = product.name.toLowerCase().includes("jordan");
-
-        return (
-          (filters.brand.includes("nike-sportswear") && isNikeSportswear) ||
-          (filters.brand.includes("jordan") && isJordan)
-        );
+        // ตรวจสอบชื่อผลิตภัณฑ์หรือแบรนด์ว่ามีคำที่ต้องการหรือไม่
+        const productName = product.name?.toLowerCase() || '';
+        const productBrand = product.brand?.toLowerCase() || '';
+        
+        return filters.brand.some(brand => {
+          const brandLower = brand.toLowerCase();
+          return (
+            productName.includes(brandLower) || 
+            productBrand.includes(brandLower)
+          );
+        });
       });
     }
 
@@ -71,7 +75,7 @@ export function ProductGrid({
     }
 
     setDisplayProducts(result);
-  }, [products, filters.brand, sortOption]); // ใส่เฉพาะ filters.brand ใน dependencies
+  }, [products, filters.brand, sortOption]);
 
   // Render loading skeletons while data is being fetched
   if (isLoading) {
