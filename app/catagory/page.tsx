@@ -10,10 +10,10 @@ import type { ProductProps } from "@/components/product-card";
 const mensShoes: ProductProps[] = [
   {
     id: "1",
-    name: "Nike Vomero 18",
-    subtitle: "Women's Air Jordan 1 High OG 'Rare Air'",
+    name: "Nike Air Jordan 1 Low",
+    subtitle: "Air Jordan 1 Low Travis Scott x Fragment",
     price: 5900,
-    image: "/images/ff.webp",
+    image: "https://static.nike.com/a/images/w_1280,q_auto,f_auto/15b77901-eb6e-46a8-8c2e-76beb0b5b42a/วันเปิดตัว-air-jordan-1-low-“travis-scott-x-fragment”.jpg",
     colors: 1,
   },
   {

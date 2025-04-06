@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'brand.assets.adidas.com',
         pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'sasom.co.th',
+        pathname: '/**'
       }
     ]
   }
