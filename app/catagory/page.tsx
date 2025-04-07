@@ -18,10 +18,10 @@ const mensShoes: ProductProps[] = [
   },
   {
     id: "2",
-    name: "Air Max DN8",
-    subtitle: "Women's Air Jordan 1 High OG 'Rare Air'",
+    name: "Adidas Samba",
+    subtitle: "Samba OG Aluminum Gum ",
     price: 6400,
-    image: "/images/ff.webp",
+    image: "/images/kkk.jpeg",
     colors: 4,
   },
   {
