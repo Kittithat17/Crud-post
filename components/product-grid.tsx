@@ -5,11 +5,10 @@ import { ProductCard, type ProductProps } from "@/components/product-card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface FilterState {
-  gender: string[];
-  category: string[];
+ 
   brand: string[];
-  color: string[];
-  size: string[];
+  
+  
 }
 
 interface ProductGridProps {

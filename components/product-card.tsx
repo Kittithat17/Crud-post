@@ -12,7 +12,6 @@ export interface ProductProps {
   price: number;
   image: string;
   categoryName?: string;
-  ratings?: number;
   colors?: number;
   isNew?: boolean;
   isBestSeller?: boolean;
@@ -24,7 +23,6 @@ export function ProductCard({
   subtitle,
   price,
   image,
-  categoryName,
   isNew,
   isBestSeller,
 }: ProductProps) {
@@ -61,11 +59,6 @@ export function ProductCard({
             {subtitle && (
               <p className="text-sm text-gray-500">
                 {subtitle}
-              </p>
-            )}
-            {categoryName && (
-              <p className="text-sm text-gray-500">
-                {categoryName}
               </p>
             )}
             <span className="font-medium">฿{price.toLocaleString()}</span>

@@ -29,7 +29,7 @@ const CategoryCards = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-28 py-8">
       {categories.map((category) => (
-        <div key={category.id} className="relative h-[500] overflow-hidden group ">
+        <div key={category.id} className="relative h-[600]   overflow-hidden group ">
           <Image
             src={category.image}
             alt={category.name}
