@@ -47,7 +47,7 @@ const Product = async ({params}:{params:{shoeId:string}} ) => {
   
   // Fetch product data
   let productData: ProductData | null = null;
-  
+
   try {
     const response = await fetch(`https://localhost/products/${shoeId}`, {
       next: { revalidate: 3600 } // Revalidate every hour (optional)
