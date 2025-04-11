@@ -1,57 +1,32 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { useCart } from "../../components/cartService/page";
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useCart } from './cartService/page';
 import { Trash2, Plus, Minus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
-const Cart = () => {
+const CartPage = () => {
   const { items, removeFromCart, updateQuantity, getTotalPrice } = useCart();
   const subtotal = getTotalPrice();
   const shippingFee = 150.00; // ค่าธรรมเนียมการจัดส่งและดำเนินการโดยประมาณ
   const total = subtotal + shippingFee;
 
-  // If cart is empty, show empty cart message
   if (items.length === 0) {
     return (
-      <div className="flex justify-center items-center mt-20">
-        <div className="w-full max-w-md border-2 rounded-lg shadow-sm p-6 md:p-8 bg-white">
-          {/* Empty cart content */}
-          <div className="flex flex-col items-center">
-            {/* Empty cart Image */}
-            <Image
-              src="/images/empty-cart.jpg"
-              alt="Empty Cart"
-              width={300}
-              height={300}
-              className="w-[200px] md:w-[300px] mb-6"
-              priority={false}
-            />
-
-            {/* Empty cart Message */}
-            <div className="text-center mb-6">
-              <h2 className="text-xl font-bold mb-2 text-black">Your cart is empty</h2>
-              <p className="text-gray-600">
-                You have not added anything in your cart.
-                <br />
-                Go ahead and explore categories.
-              </p>
-            </div>
-
-            {/* Link to homepage */}
-            <Link
-              href="/"
-              className="w-full py-3 px-6 rounded-md bg-black text-white text-lg font-medium text-center transition-transform active:scale-95 hover:opacity-75"
-            >
-              Continue Shopping
-            </Link>
-          </div>
+      <div className="container mx-auto px-4 py-12 max-w-6xl">
+        <h1 className="text-2xl font-bold mb-8">ตะกร้า</h1>
+        <div className="bg-white p-8 rounded-lg shadow-sm text-center">
+          <p>ไม่มีสินค้าในตะกร้า</p>
+          <Button asChild className="mt-4 bg-black text-white hover:bg-gray-800">
+            <Link href="/products">เลือกซื้อสินค้า</Link>
+          </Button>
         </div>
       </div>
     );
   }
 
-  // If cart has items, show cart with items
   return (
     <div className="container mx-auto px-4 py-12 max-w-6xl">
       <div className="flex flex-col lg:flex-row gap-8">
@@ -80,7 +55,7 @@ const Cart = () => {
                       <p className="text-gray-600">ไซส์ {item.selectedSize}</p>
                     </div>
                     <div className="text-right">
-                      <p className="font-semibold">{item.product.price}</p>
+                      <p className="font-semibold">฿{parseFloat(item.product.price.replace(/[^\d.]/g, '')).toLocaleString()}</p>
                     </div>
                   </div>
                   
@@ -118,7 +93,7 @@ const Cart = () => {
         <div className="w-full lg:w-1/3">
           <h2 className="text-2xl font-bold mb-8">สรุป</h2>
           
-          <div className="bg-white p-6 rounded-lg shadow-sm border">
+          <div className="bg-white p-6 rounded-lg shadow-sm">
             <div className="flex justify-between items-center mb-4">
               <span>ยอดรวมย่อย</span>
               <div className="flex items-center">
@@ -143,22 +118,24 @@ const Cart = () => {
               <span>฿{total.toLocaleString()}</span>
             </div>
             
-            <button className="w-full py-3 px-6 mb-4 bg-black text-white text-lg font-medium rounded-md hover:opacity-90 transition-all">
+            <Button className="w-full py-6 bg-black text-white hover:bg-gray-800 rounded-none mb-4">
               บุคคลทั่วไปเข้าเอาท์
-            </button>
+            </Button>
             
-            <button className="w-full py-3 px-6 mb-4 border border-black text-black text-lg font-medium rounded-md hover:bg-gray-100 transition-all">
+            <Button variant="outline" className="w-full py-6 border-black text-black hover:bg-gray-100 rounded-none mb-4">
               สมาชิกเข้าเอาท์
-            </button>
+            </Button>
             
-            <button className="w-full py-3 px-6 border rounded-md flex justify-center items-center">
-              <Image 
-                src="/images/paypal.png" 
-                alt="PayPal" 
-                width={80} 
-                height={20} 
-              />
-            </button>
+            <Button variant="outline" className="w-full py-4 border rounded-md">
+              <div className="flex justify-center items-center">
+                <Image 
+                  src="/images/paypal.png" 
+                  alt="PayPal" 
+                  width={80} 
+                  height={20} 
+                />
+              </div>
+            </Button>
           </div>
         </div>
       </div>
@@ -166,4 +143,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartPage;

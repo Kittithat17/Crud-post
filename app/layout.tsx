@@ -8,6 +8,9 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs"; // Import ClerkProvider from the correct module
 import { Toaster } from "sonner";
 import { Footer } from "@/components/Footer";
+import CartProvider from "@/components/cartService/page";
+
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -30,24 +33,26 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
-      >
-         <ThemeProvider
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
+        >
+          <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange>
-        <Navbar />
-        <main className="flex-1">
-          {children}
-          </main>
-          <Toaster /> 
-        <Footer  />
-        </ThemeProvider>
-      </body>
-    </html>
+            <CartProvider>
+              <Navbar />
+              <main className="flex-1">
+                {children}
+              </main>
+              <Toaster /> 
+              <Footer />
+            </CartProvider>
+          </ThemeProvider>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
