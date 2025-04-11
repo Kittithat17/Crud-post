@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'sasom.co.th',
+        hostname: 'assets.adidas.com',
         pathname: '/**'
       }
     ]

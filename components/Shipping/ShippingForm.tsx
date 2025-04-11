@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 export default function ShippingForm() {
   return (
-    <div className="flex justify-center items-center py-28">
+    <div className="flex justify-center items-center py-3">
       <div className="w-full max-w-md p-6">
         <h1 className="text-5xl font-semibold  mb-4">Shipping Address</h1>
         <p className=" text-lg mb-6">Please enter an address to ship to</p>

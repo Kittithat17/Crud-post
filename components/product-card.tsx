@@ -12,7 +12,6 @@ export interface ProductProps {
   price: number;
   image: string;
   categoryName?: string;
-  ratings?: number;
   colors?: number;
   isNew?: boolean;
   isBestSeller?: boolean;
@@ -24,13 +23,12 @@ export function ProductCard({
   subtitle,
   price,
   image,
-  categoryName,
   isNew,
   isBestSeller,
 }: ProductProps) {
   return (
     <Link
-      href={`/product/${id}`}
+      href={`/products/${id}`}
       className="group block transition-transform duration-300 hover:no-underline"
     >
       <Card className="border-0 shadow-none " >
@@ -56,16 +54,11 @@ export function ProductCard({
           </div>
           <div className="mt-3 space-y-1">
             <div className="flex items-center justify-between">
-              <h3 className="font-medium text-gray-900">{name}</h3>
+              <h3 className="font-medium ">{name}</h3>
             </div>
             {subtitle && (
               <p className="text-sm text-gray-500">
                 {subtitle}
-              </p>
-            )}
-            {categoryName && (
-              <p className="text-sm text-gray-500">
-                {categoryName}
               </p>
             )}
             <span className="font-medium">฿{price.toLocaleString()}</span>

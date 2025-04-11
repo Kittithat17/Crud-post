@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const sortOptions = [
-  { id: "featured", name: "Recommend" },
+  { id: "featured", name: "Featured" },
   { id: "newest", name: "Newest" },
   { id: "price-asc", name: "Price: Low-High" },
   { id: "price-desc", name: "Price: High-Low" },
