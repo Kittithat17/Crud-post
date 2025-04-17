@@ -8,7 +8,6 @@ export const products = {
     mainImage: "https://static.nike.com/a/images/w_1280,q_auto,f_auto/a27a438e-3142-4bd1-b504-bd126bafd87c/วันเปิดตัว-air-jordan-1-low-“travis-scott-x-fragment”.jpg",
     colors: 1,
     tagline: "Collaboration Edition",
-  
     environmentalInfo: "Limited edition",
     description: "Special edition of Air Jordan 1 Low from the collaboration with Travis Scott and Fragment, unique design.",
     colorName: "Black/White/Blue",
