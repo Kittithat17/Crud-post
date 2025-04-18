@@ -1,3 +1,4 @@
+//app\cart\page.tsx
 "use client";
 
 import Image from "next/image";
@@ -143,10 +144,13 @@ const Cart = () => {
               <span>฿{total.toLocaleString()}</span>
             </div>
             
-            <button className="w-full py-3 px-6 mb-4 bg-black text-white text-lg font-medium rounded-md hover:opacity-90 transition-all">
-              บุคคลทั่วไปเข้าเอาท์
-            </button>
-            
+            <Link href={`/payment?amount=${total}`}>
+              <button className="w-full py-3 px-6 mb-4 bg-black text-white text-lg font-medium rounded-md hover:opacity-90 transition-all">
+                บุคคลทั่วไปเข้าเอาท์
+              </button>
+            </Link>
+
+
             <button className="w-full py-3 px-6 mb-4 border border-black text-black text-lg font-medium rounded-md hover:bg-gray-100 transition-all">
               สมาชิกเข้าเอาท์
             </button>
