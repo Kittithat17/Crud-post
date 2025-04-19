@@ -15,7 +15,7 @@ const Cart = () => {
   if (items.length === 0) {
     return (
       <div className="flex justify-center items-center mt-20">
-        <div className="w-full max-w-md border-2 rounded-lg shadow-sm p-6 md:p-8 bg-white">
+        <div className="w-full max-w-md border-2 rounded-lg shadow-sm p-6 md:p-8 ">
           {/* Empty cart content */}
           <div className="flex flex-col items-center">
             {/* Empty cart Image */}
@@ -30,8 +30,8 @@ const Cart = () => {
 
             {/* Empty cart Message */}
             <div className="text-center mb-6">
-              <h2 className="text-xl font-bold mb-2 text-black">Your cart is empty</h2>
-              <p className="text-gray-600">
+              <h2 className="text-xl font-bold mb-2 ">Your cart is empty</h2>
+              <p >
                 You have not added anything in your cart.
                 <br />
                 Go ahead and explore categories.
@@ -41,7 +41,7 @@ const Cart = () => {
             {/* Link to homepage */}
             <Link
               href="/"
-              className="w-full py-3 px-6 rounded-md bg-black text-white text-lg font-medium text-center transition-transform active:scale-95 hover:opacity-75"
+              className="w-full py-3 px-6 rounded-md text-lg font-medium text-center transition-transform active:scale-95 hover:opacity-75"
             >
               Continue Shopping
             </Link>
@@ -62,7 +62,7 @@ const Cart = () => {
           <div className="space-y-6">
             {items.map((item) => (
               <div key={`${item.product.id}-${item.selectedSize}`} className="flex border-b pb-6">
-                <div className="w-24 h-24 bg-gray-100 rounded relative mr-4">
+                <div className="w-24 h-24 rounded relative mr-4">
                   <Image 
                     src={item.product.mainImage} 
                     alt={item.product.name}
@@ -75,9 +75,9 @@ const Cart = () => {
                   <div className="flex justify-between">
                     <div>
                       <h3 className="font-bold text-lg">{item.product.name}</h3>
-                      <p className="text-gray-600">{item.product.subtitle}</p>
-                      <p className="text-gray-600">{item.product.colorName}</p>
-                      <p className="text-gray-600">ไซส์ {item.selectedSize}</p>
+                      <p >{item.product.subtitle}</p>
+                      <p >{item.product.colorName}</p>
+                      <p >ไซส์ {item.selectedSize}</p>
                     </div>
                     <div className="text-right">
                       <p className="font-semibold">{item.product.price}</p>
@@ -103,7 +103,7 @@ const Cart = () => {
                     
                     <button 
                       onClick={() => removeFromCart(item.product.id, item.selectedSize)}
-                      className="text-gray-500 hover:text-red-500"
+                      className=" hover:text-red-500"
                     >
                       <Trash2 size={20} />
                     </button>
@@ -118,7 +118,7 @@ const Cart = () => {
         <div className="w-full lg:w-1/3">
           <h2 className="text-2xl font-bold mb-8">สรุป</h2>
           
-          <div className="bg-white p-6 rounded-lg shadow-sm border">
+          <div className="p-6 rounded-lg shadow-sm border">
             <div className="flex justify-between items-center mb-4">
               <span>ยอดรวมย่อย</span>
               <div className="flex items-center">
@@ -143,11 +143,11 @@ const Cart = () => {
               <span>฿{total.toLocaleString()}</span>
             </div>
             
-            <button className="w-full py-3 px-6 mb-4 bg-black text-white text-lg font-medium rounded-md hover:opacity-90 transition-all">
+            <button className="w-full py-3 px-6 mb-4 text-lg font-medium rounded-md hover:opacity-90 transition-all">
               บุคคลทั่วไปเข้าเอาท์
             </button>
             
-            <button className="w-full py-3 px-6 mb-4 border border-black text-black text-lg font-medium rounded-md hover:bg-gray-100 transition-all">
+            <button className="w-full py-3 px-6 mb-4 border text-lg font-medium rounded-md transition-all">
               สมาชิกเข้าเอาท์
             </button>
             
