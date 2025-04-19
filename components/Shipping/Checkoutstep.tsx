@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 
-const checkoutstep =['User login', 'Shipping address', 'Payment method', 'Place order']
+const checkoutstep =['Cart', 'Shipping address', 'Payment method', 'Place order']
 const Checkoutstep = ({current = 0} : {current: number}) => {
   return (
     <div className="flex ">

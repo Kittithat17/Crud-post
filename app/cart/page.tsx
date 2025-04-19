@@ -3,8 +3,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useCart } from "../../components/cartService/page";
-import { Trash2, Plus, Minus } from 'lucide-react';
+// import { useCart } from "../../components/cartService/page";
+// import { Trash2, Plus, Minus } from 'lucide-react';
 import { useCart } from "../../components/cartService/page";
 import { Trash2, Plus, Minus } from 'lucide-react';
 
@@ -172,5 +172,5 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+// export default Cart;
 export default Cart;
