@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Checkoutstep from "@/components/Shipping/Checkoutstep"
 import PaymentMethodForm from "./payment-method-form";
