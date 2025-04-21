@@ -60,7 +60,7 @@ const Cart = () => {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Left side - Cart items */}
         <div className="w-full lg:w-2/3">
-          <h1 className="text-2xl font-bold mb-8">ตะกร้า</h1>
+          <h1 className="text-2xl font-bold mb-8">Cart</h1>
           
           <div className="space-y-6">
             {items.map((item) => (
@@ -80,7 +80,7 @@ const Cart = () => {
                       <h3 className="font-bold text-lg">{item.product.name}</h3>
                       <p >{item.product.subtitle}</p>
                       <p >{item.product.colorName}</p>
-                      <p >ไซส์ {item.selectedSize}</p>
+                      <p >Size {item.selectedSize}</p>
                     </div>
                     <div className="text-right">
                       <p className="font-semibold">{item.product.price}</p>
@@ -147,15 +147,12 @@ const Cart = () => {
             </div>
             
             <Link href={`/payment?amount=${total}`}>
-              <button className="w-full py-3 px-6 mb-4 bg-black text-white text-lg font-medium rounded-md hover:opacity-90 transition-all">
-                บุคคลทั่วไปเข้าเอาท์
+              <button className="w-full py-3 px-6 mb-4 bg-black text-white text-lg font-medium rounded-md hover:opacity-90 transition-all cursor-pointer">
+                Checkout
               </button>
             </Link>
 
 
-            <button className="w-full py-3 px-6 mb-4 border border-black text-black text-lg font-medium rounded-md hover:bg-gray-100 transition-all">
-              สมาชิกเข้าเอาท์
-            </button>
             
             <button className="w-full py-3 px-6 border rounded-md flex justify-center items-center">
               <Image 
