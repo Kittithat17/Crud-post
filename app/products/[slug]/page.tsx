@@ -7,11 +7,15 @@ import { products } from "@/lib/products";
 import { useCart } from '../../../components/cartService/page';
 import { useRouter } from 'next/navigation'; 
 
-export default function ProductPage({ params }: { params: { slug: string } }) {
+export default function ProductPage({
+  params,
+}: {
+  params: { slug: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
   const { slug } = params;
   const product = products[slug as keyof typeof products];
- 
-
+  
   if (!product) {
     notFound();
   }
