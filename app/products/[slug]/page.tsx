@@ -7,13 +7,8 @@ import { products } from "@/lib/products";
 import { useCart } from '../../../components/cartService/page';
 import { useRouter } from 'next/navigation'; 
 
-interface ProductPageProps {
-  params: {
-    slug: string;
-  };
-}
 
-export default function ProductPage({ params }: ProductPageProps) {
+export default function ProductPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const product = products[slug as keyof typeof products];
  
