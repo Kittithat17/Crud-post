@@ -32,7 +32,7 @@ export function FilterSidebar({ onFilterChange, activeFilters }: FilterSidebarPr
       brand: [],
     }
   );
-  const [appliedFilters, setAppliedFilters] = useState<FilterState>(selectedFilters);
+  const [, setAppliedFilters] = useState<FilterState>(selectedFilters);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   // Count the total number of active brand filters

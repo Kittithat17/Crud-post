@@ -4,7 +4,7 @@ import { ListOrdered, ShoppingBag } from "lucide-react"
 import Link from "next/link"
 import { Button } from "../ui/button"
 import { SignedIn } from "@clerk/nextjs"
-import { useContext } from "react"
+//import { useContext } from "react"
 import { useCart } from '../cartService/page';
 
 
