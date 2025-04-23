@@ -98,7 +98,7 @@ export function ProductGrid({
     return (
       <div className="py-10 text-center">
         <h3 className="text-lg font-medium">No products found</h3>
-        <p className="mt-2 text-gray-500">Try adjusting your search or filters to find what you're looking for.</p>
+        <p className="mt-2 text-gray-500">Try adjusting your search or filters to find what you&apos;re looking for.</p>
       </div>
     );
   }
