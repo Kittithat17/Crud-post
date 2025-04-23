@@ -1,4 +1,4 @@
-"use client";
+
 import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -7,9 +7,10 @@ import { products } from "@/lib/products";
 import { useCart } from '../../../components/cartService/page';
 import { useRouter } from 'next/navigation'; 
 
-export default function ProductPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+async function ProductPage({ params }: { params: Promise<{ slug: string } >}) {
+  const { slug } = await params;
   const product = products[slug as keyof typeof products];
+ 
 
   if (!product) {
     notFound();
@@ -252,3 +253,5 @@ function ProductDetails({
     </div>
   );
 }
+
+export default ProductPage;
