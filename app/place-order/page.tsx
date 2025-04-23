@@ -6,10 +6,10 @@ import { Card, CardContent } from "@/components/ui/card";
 // import { getUserById } from "@/lib/actions/user.actions";
 // import { ShippingAddress } from "@/types";
 import { Metadata } from "next";
-import { headers } from "next/headers";
+//import { headers } from "next/headers";
 import Link from "next/link";
-import Image from 'next/image';
-import { redirect } from "next/navigation";
+//import Image from 'next/image';
+//import { redirect } from "next/navigation";
 // import {
 //     Table,
 //     TableBody,
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
 
 const PaceOrderPage = async () => {
     // const cart = await getMyCart();
-    const headersList = await headers();
-    const callbackUrl = headersList.get('next-url');
+    //const headersList = await headers();
+    //const callbackUrl = headersList.get('next-url');
 
     // const session = await auth();
     // const userId = session?.user?.id;
