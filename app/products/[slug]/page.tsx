@@ -1,12 +1,11 @@
-// page.tsx - This becomes a Server Component
 import { notFound } from "next/navigation";
 import { products } from "@/lib/products";
 import ProductDetails from "./product-client";
 
 
-export default async function ProductPage({ params }: { params: { slug: string } }) {
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const product = await fetch(`https://localhost1337/shoeTable/${}`)
+  const product = products[slug as keyof typeof products];
 
   if (!product) {
     notFound();
@@ -21,4 +20,5 @@ export default async function ProductPage({ params }: { params: { slug: string }
       </main>
     </div>
   );
+
 }

@@ -13,21 +13,21 @@ const sampleSneakers: ProductProps[] = [
         name: "Nike Air Jordan 1 Low",
         subtitle: "Travis Scott x Fragment",
         price: 5900,
-        image: "https://static.nike.com/a/images/w_1280,q_auto,f_auto/a27a438e-3142-4bd1-b504-bd126bafd87c/วันเปิดตัว-air-jordan-1-low-travis-scott-x-fragment.jpg",
+        main_image: "https://static.nike.com/a/images/w_1280,q_auto,f_auto/a27a438e-3142-4bd1-b504-bd126bafd87c/วันเปิดตัว-air-jordan-1-low-travis-scott-x-fragment.jpg",
     },
     {
         id: "adidas-samba-og",
         name: "Adidas Samba",
         subtitle: "OG Aluminum Gum",
         price: 6400,
-        image: "https://static.nike.com/a/images/w_1280,q_auto,f_auto/a27a438e-3142-4bd1-b504-bd126bafd87c/วันเปิดตัว-air-jordan-1-low-travis-scott-x-fragment.jpg",
+        main_image: "https://static.nike.com/a/images/w_1280,q_auto,f_auto/a27a438e-3142-4bd1-b504-bd126bafd87c/วันเปิดตัว-air-jordan-1-low-travis-scott-x-fragment.jpg",
     },
     {
         id: "nike-vomero-18",
         name: "Nike Vomero 18",
         subtitle: "Running Shoes",
         price: 5900,
-        image: "https://static.nike.com/a/images/w_1280,q_auto,f_auto/a27a438e-3142-4bd1-b504-bd126bafd87c/วันเปิดตัว-air-jordan-1-low-travis-scott-x-fragment.jpg",
+        main_image: "https://static.nike.com/a/images/w_1280,q_auto,f_auto/a27a438e-3142-4bd1-b504-bd126bafd87c/วันเปิดตัว-air-jordan-1-low-travis-scott-x-fragment.jpg",
         isNew: true,
     }
 ];
