@@ -4,8 +4,8 @@ import { products } from "@/lib/products";
 import ProductDetails from "./product-client";
 
 
-export default async function ProductPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const product = products[slug as keyof typeof products];
 
   if (!product) {
