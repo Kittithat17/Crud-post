@@ -1,75 +1,17 @@
-"use client";
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { notFound } from "next/navigation";
-import { useRouter } from 'next/navigation'; 
+import { products } from "@/lib/products";
 import { useCart } from '../../../components/cartService/page';
 
-// Define the product type
-interface Product {
-  id: string;
-  name: string;
-  subtitle: string;
-  price: string;
-  mainImage: string;
-  tagline: string;
-  description: string;
-  environmentalInfo: string;
-  thumbnails: Array<{
-    id: string;
-    img: string;
-    alt: string;
-  }>;
-  sizes: Array<{
-    id: string;
-    label: string;
-  }>;
-}
 
-export default function ProductPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
-  const [product, setProduct] = useState<Product | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function fetchProduct() {
-      try {
-        setIsLoading(true);
-        // Replace with your actual API endpoint
-        const response = await fetch(`/api/products/${slug}`);
-        
-        if (!response.ok) {
-          if (response.status === 404) {
-            notFound();
-            return;
-          }
-          throw new Error('Failed to fetch product');
-        }
-        
-        const data = await response.json();
-        setProduct(data);
-      } catch (err) {
-        console.error('Error fetching product:', err);
-        setError('Failed to load product');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    if (slug) {
-      fetchProduct();
-    }
-  }, [slug]);
-
-  if (isLoading) {
-    return <div className="container mx-auto px-4 py-8">Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="container mx-auto px-4 py-8 text-red-500">{error}</div>;
-  }
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const product = products[slug as keyof typeof products];
+ 
 
   if (!product) {
     notFound();
@@ -87,7 +29,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   );
 }
 
-function ProductImages({ product }: { product: Product }) {
+function ProductImages({ product }: { product: typeof products[keyof typeof products] }) {
   const [selectedImage, setSelectedImage] = useState(product.mainImage);
   const [zoom, setZoom] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
@@ -108,7 +50,7 @@ function ProductImages({ product }: { product: Product }) {
           {product.thumbnails.map((thumb) => (
             <div 
               key={thumb.id} 
-              className={`rounded-sm p-1 cursor-pointer  ${selectedImage === thumb.img ? 'bg-black/15' : 'bg-gray-100'}`}
+              className={` rounded-sm p-1 cursor-pointer  ${selectedImage === thumb.img ? 'bg-black/15' : 'bg-gray-100'}`}
               onClick={() => setSelectedImage(thumb?.img)}
             >
               <Image
@@ -154,13 +96,12 @@ function ProductImages({ product }: { product: Product }) {
   );
 }
 
-function ProductInfo({ product }: { product: Product }) {
+function ProductInfo({ product }: { product: typeof products[keyof typeof products] }) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
   const [showError, setShowError] = useState(false);
-  const router = useRouter();
-  const { addToCart, items } = useCart();
-
+ 
+  const { addToCart,items } = useCart();
   const toggleAccordion = (index: number) => {
     setActiveAccordion(activeAccordion === index ? null : index);
   };
@@ -171,13 +112,14 @@ function ProductInfo({ product }: { product: Product }) {
       console.log("No size selected");
       return;
     }
+   
 
     // Create a deep clone to remove readonly constraints
     const productCopy = JSON.parse(JSON.stringify(product));
     addToCart(productCopy, selectedSize, 1, true);
     
     console.log("Cart items after adding:", items);
-    router.push('/cart');
+    
   };
   
   return (
@@ -192,14 +134,17 @@ function ProductInfo({ product }: { product: Product }) {
         selectedSize={selectedSize}
         onSelectSize={(size) => {
           setSelectedSize(size);
-          setShowError(false);
+          setShowError(false); // ซ่อน error เมื่อเลือก size แล้ว
         }}
         showError={showError}
       />
 
+      
       <div className="flex items-center gap-4 mb-6">
+        
+        
         <Button 
-          className="flex-1 py-9 rounded-full hover:bg-gray-800 transition font-bold text-lg"
+          className="flex-1   py-9 rounded-full hover:bg-gray-800 transition font-bold text-lg"
           onClick={handleAddToCart}
         >
           Add to Cart
@@ -231,7 +176,7 @@ function SizeSelector({
   onSelectSize,
   showError
 }: { 
-  sizes: Product['sizes'],
+  sizes: typeof products[keyof typeof products]['sizes'],
   selectedSize: string | null,
   onSelectSize: (size: string) => void,
   showError?: boolean
@@ -240,6 +185,7 @@ function SizeSelector({
     <div className="mb-6">
       <div className="flex justify-between mb-2">
         <h3 className="font-medium">Select Size</h3>
+       
       </div>
 
       <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
@@ -269,7 +215,7 @@ function ProductDetails({
   activeAccordion, 
   toggleAccordion 
 }: { 
-  product: Product,
+  product: typeof products[keyof typeof products],
   activeAccordion: number | null,
   toggleAccordion: (index: number) => void
 }) {

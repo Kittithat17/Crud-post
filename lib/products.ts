@@ -1,7 +1,7 @@
 // lib/products.ts
 export const products = {
   "air-jordan-1-low-travis-scott": {
-    id: "air-jordan-1-low-travis-scott",
+    id: "1",
     name: "Nike Air Jordan 1 Low",
     subtitle: "Travis Scott x Fragment",
     price: "฿5,900",
@@ -38,7 +38,7 @@ export const products = {
     ],
   },
   "adidas-samba-og": {
-    id: "adidas-samba-og",
+    id: "2",
     name: "Adidas Samba",
     subtitle: "OG Aluminum Gum",
     price: "฿6,400",
@@ -61,7 +61,7 @@ export const products = {
     
   },
   "nike-vomero-18": {
-    id: "nike-vomero-18",
+    id: "3",
     name: "Nike Vomero 18",
     subtitle: "Running Shoes",
     price: "฿5,500",
@@ -86,7 +86,7 @@ export const products = {
    
   },
   "vans-classic": {
-    id: "vans-classic",
+    id: "4",
     name: "Vans Classic",
     subtitle: "Original Skate Shoes",
     price: "฿7,500",
