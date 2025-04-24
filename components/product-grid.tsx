@@ -37,11 +37,10 @@ export function ProductGrid({
         const productName = product.name?.toLowerCase() || '';
         
         
-        return filters.brand.some(brand => {
+        return (filters.brand ?? []).some(brand => {
           const brandLower = brand.toLowerCase();
           return (
-            productName.includes(brandLower) || 
-            
+            productName.includes(brandLower) 
           );
         });
       });
