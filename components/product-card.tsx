@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 
 export interface ProductProps {
+  
   id: string;
   name: string;
   subtitle?: string;
