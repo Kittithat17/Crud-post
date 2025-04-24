@@ -35,13 +35,13 @@ export function ProductGrid({
       result = result.filter(product => {
         // ตรวจสอบชื่อผลิตภัณฑ์หรือแบรนด์ว่ามีคำที่ต้องการหรือไม่
         const productName = product.name?.toLowerCase() || '';
-        const productBrand = product.brand?.toLowerCase() || '';
+        
         
         return filters.brand.some(brand => {
           const brandLower = brand.toLowerCase();
           return (
             productName.includes(brandLower) || 
-            productBrand.includes(brandLower)
+            
           );
         });
       });

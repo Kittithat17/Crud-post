@@ -5,8 +5,8 @@ import ProductDetails from "./product-client";
 
 
 export default async function ProductPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
-  const product = products[slug as keyof typeof products];
+  const { slug } = await params;
+  const product = await fetch(`https://localhost1337/shoeTable/${}`)
 
   if (!product) {
     notFound();
