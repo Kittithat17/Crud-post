@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 
 
 const tabs = [
-  { name: "Overview", path: "/admin/overview" },
   { name: "Products", path: "/admin/products" },
   { name: "Orders", path: "/admin/orders" },
   { name: "Users", path: "/admin/users" },

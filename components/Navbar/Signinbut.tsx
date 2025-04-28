@@ -32,7 +32,7 @@ const Signinbut = () => {
             </DropdownMenuItem>
 
             <DropdownMenuItem>
-              <Link href="/admin/overview">Admin</Link>
+              <Link href="/admin/users">Admin</Link>
             </DropdownMenuItem>
 
             <DropdownMenuItem>
