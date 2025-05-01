@@ -17,8 +17,8 @@ const Cart = () => {
   // If cart is empty, show empty cart message
   if (items.length === 0) {
     return (
-      <div className="flex justify-center items-center mt-20">
-        <div className="w-full max-w-md border-2 rounded-lg shadow-sm p-6 md:p-8 ">
+      <div className="flex justify-center items-center py-12">
+        <div className="w-full max-w-md border-2 text-black rounded-lg shadow-sm p-6 md:p-8 bg-white">
           {/* Empty cart content */}
           <div className="flex flex-col items-center">
             {/* Empty cart Image */}
@@ -44,7 +44,7 @@ const Cart = () => {
             {/* Link to homepage */}
             <Link
               href="/"
-              className="w-full py-3 px-6 rounded-md text-lg font-medium text-center transition-transform active:scale-95 hover:opacity-75"
+              className="w-full py-3 px-6 rounded-md text-lg font-medium text-center transition-transform active:scale-95 hover:opacity-75 bg-black text-white "
             >
               Continue Shopping
             </Link>
@@ -146,7 +146,7 @@ const Cart = () => {
               <span>฿{total.toLocaleString()}</span>
             </div>
             
-            <Link href={`/payment?amount=${total}`}>
+            <Link href='/address' >
               <button className="w-full py-3 px-6 mb-4 bg-black text-white text-lg font-medium rounded-md hover:opacity-90 transition-all cursor-pointer">
                 Checkout
               </button>
@@ -154,12 +154,13 @@ const Cart = () => {
 
 
             
-            <button className="w-full py-3 px-6 border rounded-md flex justify-center items-center">
+            <button className="w-full py-3 px-6 border rounded-md flex justify-center items-center bg-amber-300">
               <Image 
                 src="/images/paypal.png" 
                 alt="PayPal" 
                 width={80} 
-                height={20} 
+                height={20}
+               
               />
             </button>
           </div>
