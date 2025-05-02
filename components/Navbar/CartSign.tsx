@@ -18,9 +18,9 @@ const CartSign = () => {
       <Button asChild variant={"ghost"} size={'lg'}>
         <Link href="/cart" className="relative flex items-center">
           <ShoppingBag className="size-7" />
-          {/* <span className="absolute -top-1 -right-1 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-            0
-          </span> */}
+          <span className="absolute -top-1 -right-1 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+            {itemCount}
+          </span> 
         </Link>
       </Button>
     
@@ -29,10 +29,6 @@ const CartSign = () => {
     <Button asChild variant={"ghost"} size={'lg'}>
         <Link href="/orderhistory" className="relative flex items-center">
           <ListOrdered className="size-7" />
-          <span className="absolute -top-1 -right-1 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-            {itemCount}
-           
-          </span>
         </Link>
       </Button>
     </SignedIn>
