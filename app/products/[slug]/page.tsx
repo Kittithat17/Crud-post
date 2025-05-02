@@ -1,59 +1,280 @@
-// Update your app/products/[id]/page.tsx file
+"use client";
 
-import { notFound } from "next/navigation";
-import ProductDetails from "./product-client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
-interface Product {
+type Product = {
   id: string;
   name: string;
-  subtitle?: string;
-  price: number;
-  main_image: string;
-  categoryName?: string;
-  colors?: number;
-  isNew?: boolean;
-  isBestSeller?: boolean;
-  description?: string;
-}
+  subtitle: string;
+  price: string;
+  mainImage: string;
+  colors: string[];
+  tagline: string;
+  environmentalInfo: string;
+  description: string;
+  colorName: string;
+  styleCode: string;
+  madeIn: string;
+  isNew: boolean;
+  thumbnails: { id: string; img: string; alt: string }[];
+  sizes: { id: string; label: string }[];
+};
 
-async function getProduct(id: string): Promise<Product | null> {
-  try {
-    const response = await fetch(`http://localhost:1337/getSneaker/${id}`, {
-      // Add cache: 'no-store' for always fresh data, or specify a revalidation period
-      cache: 'no-store'
-      // Or use next.js revalidation:
-      // next: { revalidate: 3600 } // Revalidate every hour
-    });
-    
-    if (!response.ok) {
-      if (response.status === 404) {
-        return null;
-      }
-      console.log(response.status)
-    }
-    
-    return await response.json();
-  } catch (error) {
-    // In production, you might want to log this error to an error tracking service
-    console.error('Error fetching product:', error);
-    return null;
-  }
-}
+export default function ProductPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
+  const router = useRouter();
+  const [product, setProduct] = useState<Product | null>(null);
+ 
 
-export default async function ProductPage({ params }: { params: { id: string } }) {
-  const product = await getProduct(params.id);
-  
-  if (!product) {
-    notFound();
-  }
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${slug}`);
+        if (!res.ok) {
+          router.replace("/404");
+          return;
+        }
+        const data = await res.json();
+        setProduct(data);
+      } catch (err) {
+        console.error(err);
+        router.replace("/404");
+      } 
+    };
+
+    fetchProduct();
+  }, [slug]);
+
+
 
   return (
     <div className="font-sans">
       <main className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          <ProductDetails product={product} />
+          <ProductImages product={product} />
+          <ProductInfo product={product} />
         </div>
       </main>
+    </div>
+  );
+}
+
+function ProductImages({ product }: { product: typeof products[keyof typeof products] }) {
+  const [selectedImage, setSelectedImage] = useState<string>(product.mainImage);
+  const [zoom, setZoom] = useState(false);
+  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!zoom) return;
+    
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - left) / width) * 100;
+    const y = ((e.clientY - top) / height) * 100;
+    setZoomPosition({ x, y });
+  };
+
+  return (
+    <div className="lg:w-3/5">
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex md:flex-col gap-2 order-2 md:order-1">
+          {product.thumbnails.map((thumb) => (
+            <div 
+              key={thumb.id} 
+              className={` rounded-sm p-1 cursor-pointer  ${selectedImage === thumb.img ? 'bg-black/15' : 'bg-gray-100'}`}
+              onClick={() => setSelectedImage(thumb.img)}
+            >
+              <Image
+                src={thumb.img}
+                alt={thumb.alt}
+                width={80}
+                height={80}
+                className="w-20 h-20 object-contain"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div 
+          className="relative bg-gray-100 rounded-lg order-1 md:order-2 flex-1 overflow-hidden"
+          onMouseEnter={() => setZoom(true)}
+          onMouseLeave={() => setZoom(false)}
+          onMouseMove={handleMouseMove}
+        >
+          <Image
+            src={selectedImage}
+            alt={product.name}
+            width={600}
+            height={600}
+            className="w-full h-auto cursor-zoom-in"
+            priority
+          />
+          
+          {zoom && (
+            <div 
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundImage: `url(${selectedImage})`,
+                backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
+                backgroundSize: '150%',
+                backgroundRepeat: 'no-repeat',
+              }}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProductInfo({ product }: { product: typeof products[keyof typeof products] }) {
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
+  const [showError, setShowError] = useState(false);
+  const toggleAccordion = (index: number) => {
+    setActiveAccordion(activeAccordion === index ? null : index);
+  };
+
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      setShowError(true); // แสดง error
+      return;
+    }
+    // Add to cart logic would go here
+    
+  };
+
+  return (
+    <div className="lg:w-2/5">
+      <div className="text-sm text-orange-600 mb-2">{product.tagline}</div>
+      <h1 className="text-2xl font-bold mb-1">{product.name}</h1>
+      <div className="text-gray-600 mb-4">{product.subtitle}</div>
+      <div className="text-xl font-bold mb-6">{product.price}</div>
+
+      <SizeSelector 
+        sizes={product.sizes} 
+        selectedSize={selectedSize}
+        onSelectSize={(size) => {
+          setSelectedSize(size);
+          setShowError(false); // ซ่อน error เมื่อเลือก size แล้ว
+        }}
+        showError={showError}
+      />
+
+      
+      <div className="flex items-center gap-4 mb-6">
+        
+        
+        <Button 
+          className="flex-1   py-9 rounded-full hover:bg-gray-800 transition font-bold text-lg"
+          onClick={handleAddToCart}
+        >
+          Add to Cart
+        </Button>
+      </div>
+
+      <ProductDetails 
+        product={product} 
+        activeAccordion={activeAccordion}
+        toggleAccordion={toggleAccordion}
+      />
+      
+      <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+        <h3 className="font-medium mb-2">Member Exclusive</h3>
+        <p className="text-sm text-gray-600 mb-3">
+          Earn 5% back when you use a Nike credit card. Join us or sign in.
+        </p>
+        <Button variant="outline" className="w-full border-black">
+          Join Us
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+function SizeSelector({ 
+  sizes, 
+  selectedSize, 
+  onSelectSize,
+  showError
+}: { 
+  sizes: typeof products[keyof typeof products]['sizes'],
+  selectedSize: string | null,
+  onSelectSize: (size: string) => void,
+  showError?: boolean
+}) {
+  return (
+    <div className="mb-6">
+      <div className="flex justify-between mb-2">
+        <h3 className="font-medium">Select Size</h3>
+       
+      </div>
+
+      <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+        {sizes.map((size) => (
+          <button
+            key={size.id}
+            className={`border rounded-md py-3 px-2 text-center hover:border-black focus:outline-none transition-colors ${
+              selectedSize === size.label ? 'border-black bg-black text-white' : 'border-gray-300'
+            }`}
+            onClick={() => onSelectSize(size.label)}
+          >
+            {size.label}
+          </button>
+        ))}
+      </div>
+      {showError && (
+        <div className="mt-2 text-red-500 text-lg">
+          Size selection is required
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProductDetails({ 
+  product, 
+  activeAccordion, 
+  toggleAccordion 
+}: { 
+  product: typeof products[keyof typeof products],
+  activeAccordion: number | null,
+  toggleAccordion: (index: number) => void
+}) {
+  const accordionItems = [
+    { title: "Product Details", content: product.description },
+    { title: "Shipping & Returns", content: "We offer free returns within 30 days." },
+    { title: "Sustainability", content: product.environmentalInfo },
+  ];
+
+  return (
+    <div className="border-t border-gray-200 pt-4">
+      {accordionItems.map((item, index) => (
+        <div key={index} className="border-b border-gray-200 py-4">
+          <button 
+            className="w-full flex justify-between items-center"
+            onClick={() => toggleAccordion(index)}
+          >
+            <h3 className="font-medium">{item.title}</h3>
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className={`h-5 w-5 transition-transform ${activeAccordion === index ? 'rotate-180' : ''}`} 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          {activeAccordion === index && (
+            <div className="mt-2 text-gray-600">
+              {item.content}
+            </div>
+          )}
+        </div>
+      ))}
     </div>
   );
 }
