@@ -6,7 +6,7 @@ const Checkoutstep = ({current = 0} : {current: number}) => {
     <div className="flex ">
     {checkoutstep.map((step, index) => (
         <div key={step} className="flex  w-full items-center">
-            <div className={cn('p-3 w-56 rounded-full text-center text-sm bg-gray-200 font-medium',
+            <div className={cn('p-3 w-56 rounded-full text-center text-black text-sm bg-gray-200 font-medium',
                 index === current && 'bg-black text-white font-medium'
             )}>
                 {step}
