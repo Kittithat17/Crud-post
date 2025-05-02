@@ -197,24 +197,14 @@ export default function AdminProductPage() {
                 value={formData.tagline}
                 onChange={handleInputChange}
               />
-              <Input 
-                placeholder="Environmental Info" 
-                name="environmentalInfo"
-                value={formData.environmentalInfo}
-                onChange={handleInputChange}
-              />
+              
               <Input 
                 placeholder="Color Name" 
                 name="colorName"
                 value={formData.colorName}
                 onChange={handleInputChange}
               />
-              <Input 
-                placeholder="Style Code" 
-                name="styleCode"
-                value={formData.styleCode}
-                onChange={handleInputChange}
-              />
+              
               <Input 
                 placeholder="Made In" 
                 name="madeIn"
