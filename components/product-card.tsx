@@ -29,6 +29,8 @@ export function ProductCard({
     const numPrice = typeof price === 'string' ? parseFloat(price) : price;
     return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
+
+  console.log("product : " , id)
   return (
     <Link
       href={`/products/${id}`}

@@ -20,7 +20,7 @@ const Signinbut = () => {
   useEffect(() => {
     // Once the user is loaded, register them in your database
     const registerUserAndGetRole = async () => {
-      if (isLoaded && user) {
+      if (isLoaded && user && !userRegistered) { // Change to !userRegistered to run once
         try {
           console.log("Registering user:", user.id);
           
@@ -37,19 +37,28 @@ const Signinbut = () => {
             }),
           });
           
-          // Whether the user was just created or already existed,
-          // fetch their current role from your database
-          const roleResponse = await fetch(`http://localhost:1337/getUserRole?clerk_id=${user.id}`);
-          
-          if (roleResponse.ok) {
-            const roleData = await roleResponse.json();
-            if (roleData.role) {
-              setUserRole(roleData.role);
-              console.log("User role:", roleData.role);
+          // Check the response status
+          if (response.ok) {
+            // User was created or already exists
+            console.log("User registration successful");
+            
+            // Now fetch the user's role
+            const roleResponse = await fetch(`http://localhost:1337/getUserRole?clerk_id=${user.id}`);
+            
+            if (roleResponse.ok) {
+              const roleData = await roleResponse.json();
+              if (roleData.role) {
+                setUserRole(roleData.role);
+                console.log("User role:", roleData.role);
+              }
+            } else {
+              console.error("Failed to fetch user role:", await roleResponse.text());
             }
+            
+            setUserRegistered(true);
+          } else {
+            console.error("Failed to register user:", await response.text());
           }
-          
-          setUserRegistered(true);
         } catch (error) {
           console.error("Error registering user or fetching role:", error);
         }
@@ -57,7 +66,7 @@ const Signinbut = () => {
     };
     
     registerUserAndGetRole();
-  }, [isLoaded, user]);
+  }, [isLoaded, user, userRegistered]); // Add userRegistered to dependencies
   
   return (
     <div className="flex items-center">
