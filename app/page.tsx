@@ -15,9 +15,9 @@ const page = () => {
       
       {/* Hero Section with AIR MAX DN8 */}
       <div className="w-full py-12 px-4 text-center ">
-        <h2 className="text-md font-black ">ULTRA-REALISTIC COATING TECHNOLOGY</h2>
-        <h1 className="  font-black uppercase py-6" style={{ fontSize: "100px" }}>AIR MAX DN8</h1>
-        <p className="text-gray-600 max-w-2xl mx-auto mb-6">
+        <h2 className="text-lg font-black ">ULTRA-REALISTIC COATING TECHNOLOGY</h2>
+        <h1 className="  font-black uppercase py-4" style={{ fontSize: "100px" }}>AIR MAX DN8</h1>
+        <p className=" max-w-2xl mx-auto mb-6 text-md">
           Discover the coating technology as demonstrated by Nico Williams
         </p>
         <Link href="/catagory">
@@ -29,8 +29,8 @@ const page = () => {
 
       <CategoryCards/>
       <div className="w-full py-10 px-4 text-center ">
-        <h2 className="text-md font-black">JOIN THE SNEAKER<span style={{ color: "red" }}>X</span> COLLECTION</h2>
-        <h1 className="  font-black uppercase py-6" style={{ fontSize: "70px" }}>Best sneaker collection</h1>
+        <h2 className="text-lg font-black">JOIN THE SNEAKER<span style={{ color: "red" }}>X</span> COLLECTION</h2>
+        <h1 className="  font-black uppercase py-4" style={{ fontSize: "70px" }}>Best sneaker collection</h1>
         <p className="text-center text-md font-stretch-semi-condensed mb-6">
       Experience the ultimate in comfort and style with our premium sneaker collection.
         <br/>
@@ -44,6 +44,21 @@ const page = () => {
       </div>
       
       <Slidecard />
+
+      <div className="w-full py-12 px-4 text-center ">
+        <h2 className="text-lg font-black uppercase ">From Our Community</h2>
+        <h1 className="  font-black uppercase py-4" style={{ fontSize: "100px" }}>Never miss a beat</h1>
+        <p className=" max-w-2xl mx-auto mb-6">
+        Sign up with us today and be part of
+Converse mailing list. Get the latest update, news and exclusive
+drop - sent straight to your inbox.
+        </p>
+        <Link href="/catagory">
+        <Button className=" px-6 py-8 rounded-full hover:bg-gray-800 transition uppercase font-black text-lg">
+          shop now
+        </Button>
+        </Link>
+      </div>
     </div>
   )
 }
