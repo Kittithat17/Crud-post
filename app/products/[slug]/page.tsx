@@ -19,6 +19,7 @@ type Product = {
   styleCode: string;
   madeIn: string;
   isNew: boolean;
+  isBestSeller: boolean;
   thumbnails: { id: string; img: string; alt: string }[];
   sizes: { id: string; label: string }[];
 };
