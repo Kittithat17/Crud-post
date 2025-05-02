@@ -1,13 +1,11 @@
-import { Metadata } from "next";
+
 
 import { redirect } from "next/navigation";
 import Checkoutstep from "@/components/Shipping/Checkoutstep"
 import PaymentMethodForm from "./payment-method-form";
 import { currentUser } from "@clerk/nextjs/server"
 
-export const metadata: Metadata = {
-    title: "Payment Method"
-}
+
 
 const alexJohnson = {
   name: "Alex Johnson",

@@ -28,7 +28,6 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
- 
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -38,39 +37,38 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
           router.replace("/404");
           return;
         }
-        const data = await res.json();
+        const data: Product = await res.json();
         setProduct(data);
       } catch (err) {
         console.error(err);
         router.replace("/404");
-      } 
+      }
     };
 
     fetchProduct();
-  }, [slug]);
+  }, [router, slug]);
 
-
+  if (!product) {
+    return <div className="p-10 text-center text-gray-500">Loading product...</div>;
+  }
 
   return (
-    <div className="font-sans">
-      <main className="container mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          <ProductImages product={product} />
-          <ProductInfo product={product} />
-        </div>
-      </main>
-    </div>
+    <main className="container mx-auto px-4 py-8 font-sans">
+      <div className="flex flex-col lg:flex-row gap-8">
+        <ProductImages product={product} />
+        <ProductInfo product={product} />
+      </div>
+    </main>
   );
 }
 
-function ProductImages({ product }: { product: typeof products[keyof typeof products] }) {
+function ProductImages({ product }: { product: Product }) {
   const [selectedImage, setSelectedImage] = useState<string>(product.mainImage);
   const [zoom, setZoom] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!zoom) return;
-    
     const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - left) / width) * 100;
     const y = ((e.clientY - top) / height) * 100;
@@ -84,16 +82,10 @@ function ProductImages({ product }: { product: typeof products[keyof typeof prod
           {product.thumbnails.map((thumb) => (
             <div 
               key={thumb.id} 
-              className={` rounded-sm p-1 cursor-pointer  ${selectedImage === thumb.img ? 'bg-black/15' : 'bg-gray-100'}`}
+              className={`rounded-sm p-1 cursor-pointer ${selectedImage === thumb.img ? 'bg-black/15' : 'bg-gray-100'}`}
               onClick={() => setSelectedImage(thumb.img)}
             >
-              <Image
-                src={thumb.img}
-                alt={thumb.alt}
-                width={80}
-                height={80}
-                className="w-20 h-20 object-contain"
-              />
+              <Image src={thumb.img} alt={thumb.alt} width={80} height={80} className="w-20 h-20 object-contain" />
             </div>
           ))}
         </div>
@@ -112,7 +104,6 @@ function ProductImages({ product }: { product: typeof products[keyof typeof prod
             className="w-full h-auto cursor-zoom-in"
             priority
           />
-          
           {zoom && (
             <div 
               className="absolute inset-0 pointer-events-none"
@@ -130,21 +121,21 @@ function ProductImages({ product }: { product: typeof products[keyof typeof prod
   );
 }
 
-function ProductInfo({ product }: { product: typeof products[keyof typeof products] }) {
+function ProductInfo({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
   const [showError, setShowError] = useState(false);
+
   const toggleAccordion = (index: number) => {
     setActiveAccordion(activeAccordion === index ? null : index);
   };
 
   const handleAddToCart = () => {
     if (!selectedSize) {
-      setShowError(true); // แสดง error
+      setShowError(true);
       return;
     }
-    // Add to cart logic would go here
-    
+    // TODO: add to cart logic
   };
 
   return (
@@ -159,17 +150,14 @@ function ProductInfo({ product }: { product: typeof products[keyof typeof produc
         selectedSize={selectedSize}
         onSelectSize={(size) => {
           setSelectedSize(size);
-          setShowError(false); // ซ่อน error เมื่อเลือก size แล้ว
+          setShowError(false);
         }}
         showError={showError}
       />
 
-      
       <div className="flex items-center gap-4 mb-6">
-        
-        
         <Button 
-          className="flex-1   py-9 rounded-full hover:bg-gray-800 transition font-bold text-lg"
+          className="flex-1 py-9 rounded-full hover:bg-gray-800 transition font-bold text-lg"
           onClick={handleAddToCart}
         >
           Add to Cart
@@ -181,7 +169,7 @@ function ProductInfo({ product }: { product: typeof products[keyof typeof produc
         activeAccordion={activeAccordion}
         toggleAccordion={toggleAccordion}
       />
-      
+
       <div className="mt-6 p-4 bg-gray-50 rounded-lg">
         <h3 className="font-medium mb-2">Member Exclusive</h3>
         <p className="text-sm text-gray-600 mb-3">
@@ -201,23 +189,22 @@ function SizeSelector({
   onSelectSize,
   showError
 }: { 
-  sizes: typeof products[keyof typeof products]['sizes'],
-  selectedSize: string | null,
-  onSelectSize: (size: string) => void,
-  showError?: boolean
+  sizes: Product["sizes"];
+  selectedSize: string | null;
+  onSelectSize: (size: string) => void;
+  showError?: boolean;
 }) {
   return (
     <div className="mb-6">
       <div className="flex justify-between mb-2">
         <h3 className="font-medium">Select Size</h3>
-       
       </div>
 
       <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
         {sizes.map((size) => (
           <button
             key={size.id}
-            className={`border rounded-md py-3 px-2 text-center hover:border-black focus:outline-none transition-colors ${
+            className={`border rounded-md py-3 px-2 text-center hover:border-black transition-colors ${
               selectedSize === size.label ? 'border-black bg-black text-white' : 'border-gray-300'
             }`}
             onClick={() => onSelectSize(size.label)}
@@ -240,9 +227,9 @@ function ProductDetails({
   activeAccordion, 
   toggleAccordion 
 }: { 
-  product: typeof products[keyof typeof products],
-  activeAccordion: number | null,
-  toggleAccordion: (index: number) => void
+  product: Product;
+  activeAccordion: number | null;
+  toggleAccordion: (index: number) => void;
 }) {
   const accordionItems = [
     { title: "Product Details", content: product.description },
@@ -270,9 +257,7 @@ function ProductDetails({
             </svg>
           </button>
           {activeAccordion === index && (
-            <div className="mt-2 text-gray-600">
-              {item.content}
-            </div>
+            <div className="mt-2 text-gray-600">{item.content}</div>
           )}
         </div>
       ))}
