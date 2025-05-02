@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-
+import { toast } from "sonner";
 interface User {
   id: string;
   clerk_id: string;
@@ -14,7 +14,7 @@ export default function AdminUsersPage() {
   const [selectedRoles, setSelectedRoles] = useState<Record<string, string>>({});
   const [editingUserId, setEditingUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error,] = useState<string | null>(null);
   const [saving, setSaving] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -40,9 +40,8 @@ export default function AdminUsersPage() {
         initialRoles[user.clerk_id] = user.role;
       });
       setSelectedRoles(initialRoles);
-    } catch (err: any) {
-      setError(err.message || 'An error occurred');
-      console.error('Error fetching users:', err);
+    } catch  {
+      toast.error("Failed to fetch users");
     } finally {
       setLoading(false);
     }
@@ -88,9 +87,8 @@ export default function AdminUsersPage() {
       
       // Clear editing state
       setEditingUserId(null);
-    } catch (err: any) {
-      setError(err.message || 'An error occurred');
-      console.error(`Error updating ${user.email}:`, err);
+    } catch {
+      toast.error("Failed");
     } finally {
       setSaving(false);
       
