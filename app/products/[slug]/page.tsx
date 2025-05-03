@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -24,20 +24,42 @@ type Product = {
   sizes: { id: string; label: string }[];
 };
 
-export default function ProductPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+type PageParams = {
+  slug:string
+}
+
+export default function ProductPage({ params }: { params: PageParams | Promise<PageParams>}) {
+  const resolvedParams = typeof params === 'object' && 'then' in params 
+  ? use(params as Promise<PageParams>) 
+  : params as PageParams;
+  const { slug } = resolvedParams;
   const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${slug}`);
+        const res = await fetch(`http://localhost:1337/getSneaker/${slug}`);
+        console.log("Response status:", res.status);
+          
         if (!res.ok) {
           router.replace("/404");
           return;
         }
-        const data: Product = await res.json();
+        
+        // Add this line to see the raw response data
+        const text = await res.text();
+        console.log("Raw response:", text);
+        
+        // Then try to parse it as JSON
+        let data;
+        try {
+          data = JSON.parse(text);
+          console.log("Parsed data:", data);
+        } catch (e) {
+          console.error("JSON parse error:", e);
+        }
+        
         setProduct(data);
       } catch (err) {
         console.error(err);
@@ -63,10 +85,10 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 }
 
 function ProductImages({ product }: { product: Product }) {
-  const [selectedImage, setSelectedImage] = useState<string>(product.mainImage);
+  const [selectedImage, setSelectedImage] = useState<string>(product.mainImage || '');
   const [zoom, setZoom] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
-
+  
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!zoom) return;
     const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
@@ -79,7 +101,7 @@ function ProductImages({ product }: { product: Product }) {
     <div className="lg:w-3/5">
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex md:flex-col gap-2 order-2 md:order-1">
-          {product.thumbnails.map((thumb) => (
+          {product.thumbnails && product.thumbnails.length > 0 && product.thumbnails.map((thumb) => (
             <div 
               key={thumb.id} 
               className={`rounded-sm p-1 cursor-pointer ${selectedImage === thumb.img ? 'bg-black/15' : 'bg-gray-100'}`}
@@ -201,7 +223,7 @@ function SizeSelector({
       </div>
 
       <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-        {sizes.map((size) => (
+        {sizes && sizes.length > 0 && sizes.map((size) => (
           <button
             key={size.id}
             className={`border rounded-md py-3 px-2 text-center hover:border-black transition-colors ${

@@ -9,7 +9,7 @@ export interface ProductProps {
   name: string;
   subtitle?: string;
   price: number;
-  main_image: string;
+  mainImage: string;
   categoryName?: string;
   colors?: number;
   isNew?: boolean;
@@ -21,7 +21,7 @@ export function ProductCard({
   name,
   subtitle,
   price,
-  main_image,
+  mainImage,
   isNew,
   isBestSeller,
 }: ProductProps) {
@@ -40,7 +40,7 @@ export function ProductCard({
         <CardContent className="p-0">
           <div className="relative aspect-square overflow-hidden bg-zinc-100">
             <Image
-              src={main_image}
+              src={mainImage}
               alt={name}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
