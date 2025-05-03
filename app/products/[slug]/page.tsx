@@ -4,6 +4,7 @@ import { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/components/cartService/page";
 
 type Product = {
   id: string;
@@ -147,7 +148,8 @@ function ProductInfo({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
   const [showError, setShowError] = useState(false);
-
+  const router = useRouter();
+  const { addToCart,items } = useCart();
   const toggleAccordion = (index: number) => {
     setActiveAccordion(activeAccordion === index ? null : index);
   };
@@ -157,7 +159,11 @@ function ProductInfo({ product }: { product: Product }) {
       setShowError(true);
       return;
     }
-    // TODO: add to cart logic
+    const productCopy = JSON.parse(JSON.stringify(product));
+    addToCart(productCopy, selectedSize, 1, true);
+    
+    console.log("Cart items after adding:", items);
+    router.push('/cart');
   };
 
   return (
