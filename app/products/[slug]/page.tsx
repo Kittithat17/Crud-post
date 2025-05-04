@@ -165,13 +165,16 @@ function ProductInfo({ product }: { product: Product }) {
     console.log("Cart items after adding:", items);
     router.push('/cart');
   };
-
+  const formatPrice = (price: number | string): string => {
+    const numPrice = typeof price === 'string' ? parseFloat(price) : price;
+    return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
   return (
     <div className="lg:w-2/5">
       <div className="text-sm text-orange-600 mb-2">{product.tagline}</div>
       <h1 className="text-2xl font-bold mb-1">{product.name}</h1>
       <div className="text-gray-600 mb-4">{product.subtitle}</div>
-      <div className="text-xl font-bold mb-6">{product.price}</div>
+      <div className="text-xl font-bold mb-6">฿ {formatPrice(product.price)}</div>
 
       <SizeSelector 
         sizes={product.sizes} 
