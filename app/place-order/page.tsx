@@ -37,6 +37,9 @@ const PlaceOrderPage = () => {
   if (!user.paymentMethod) {
     redirect('/payment');
   }
+  if(!items.length) {
+    redirect('/cart');
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -156,14 +159,7 @@ const PlaceOrderPage = () => {
                   Place Order
                 </Button>
                 
-                <Button variant="outline" className="w-full h-12 flex items-center justify-center space-x-2">
-                  <Image 
-                    src="/images/paypal.png" 
-                    alt="PayPal" 
-                    width={80} 
-                    height={20}
-                  />
-                </Button>
+        
               </div>
               
               <p className="text-sm text-gray-500 text-center pt-2">

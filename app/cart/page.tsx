@@ -43,7 +43,7 @@ const Cart = () => {
 
             {/* Link to homepage */}
             <Link
-              href="/"
+              href="/catagory"
               className="w-full py-3 px-6 rounded-md text-lg font-medium text-center transition-transform active:scale-95 hover:opacity-75 bg-black text-white "
             >
               Continue Shopping
