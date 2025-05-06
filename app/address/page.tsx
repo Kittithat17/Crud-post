@@ -8,6 +8,9 @@ const Address = async () => {
   if (!hasuser) {
     redirect("/")
   }
+if (hasuser.address) {
+    redirect("/payment")
+  }
   return (
     <div className="flex flex-col justify-between items-center">
       <Checkoutstep current={1} />
