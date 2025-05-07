@@ -12,7 +12,7 @@ import Signinbut from "./Signinbut";
 const Navbar = () => {
   return (
        <nav className="sticky top-0 z-50 w-full bg-background">
-      <div className="flex  py-3 px-26 justify-between">
+      <div className="flex  py-6 px-26 justify-between">
         <div className="flex gap-6">
           {/* Sideleft */}
           <Sideleft />
