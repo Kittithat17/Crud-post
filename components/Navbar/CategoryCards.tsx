@@ -55,9 +55,9 @@ const CategoryCards = () => {
             <div className="w-full">
               <Link
                 href={category.link}
-                className="inline-block bg-white hover:bg-gray-100 text-black font-medium py-3 px-6 rounded-full text-sm transition-colors duration-300"
+                className="inline-block bg-black hover:bg-gray-800 text-white  font-semibold py-3 px-6 rounded-full text-lg transition-colors duration-300"
               >
-                Shop {category.name}
+                Shop Now
               </Link>
             </div>
           </div>

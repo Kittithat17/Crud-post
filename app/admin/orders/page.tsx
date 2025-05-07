@@ -1,6 +1,8 @@
-const page = () => {
+const Orderpage = () => {
   return (
-    <div>order page</div>
+    <div>
+      
+    </div>
   )
 }
-export default page
+export default Orderpage
