@@ -47,15 +47,15 @@ const Page = () => {
         variants={container}
         className="w-full py-12 px-4 text-center"
       >
-        <motion.h2 variants={item} className="text-lg font-black">ULTRA-REALISTIC COATING TECHNOLOGY</motion.h2>
+        <motion.h2 variants={item} className="text-xl font-black">ULTRA-REALISTIC COATING TECHNOLOGY</motion.h2>
         <motion.h1 
           variants={item}
           className="font-black uppercase py-4" 
           style={{ fontSize: "100px" }}
         >
-          AIR MAX DN8
+          AIR MA<span className="text-red-500">X</span> DN8
         </motion.h1>
-        <motion.p variants={item} className="max-w-2xl mx-auto mb-6 text-md">
+        <motion.p variants={item} className="max-w-2xl mx-auto mb-6 text-lg">
           Discover the coating technology as demonstrated by Nico Williams
         </motion.p>
         <motion.div variants={item}>
@@ -76,7 +76,7 @@ const Page = () => {
         variants={container}
         className="w-full py-10 px-4 text-center"
       >
-        <motion.h2 variants={item} className="text-lg font-black">JOIN THE SNEAKER<span style={{ color: "red" }}>X</span> COLLECTION</motion.h2>
+        <motion.h2 variants={item} className="text-xl font-black">JOIN THE SNEAKER<span style={{ color: "red" }}>X</span> COLLECTION</motion.h2>
         <motion.h1 
           variants={item}
           className="font-black uppercase py-4" 
@@ -84,7 +84,7 @@ const Page = () => {
         >
           Best sneaker collection
         </motion.h1>
-        <motion.p variants={item} className="text-center text-md font-stretch-semi-condensed mb-6">
+        <motion.p variants={item} className="text-center text-lg font-stretch-semi-condensed mb-6 ">
           Experience the ultimate in comfort and style with our premium sneaker collection.
           <br/>
           Designed for performance and crafted for those who demand excellence.
@@ -107,7 +107,7 @@ const Page = () => {
         variants={container}
         className="w-full py-12 px-4 text-center"
       >
-        <motion.h2 variants={item} className="text-lg font-black uppercase">From Our Community</motion.h2>
+        <motion.h2 variants={item} className="text-xl font-black uppercase">From Our Community</motion.h2>
         <motion.h1 
           variants={item}
           className="font-black uppercase py-4" 
@@ -115,7 +115,7 @@ const Page = () => {
         >
           Never miss a beat
         </motion.h1>
-        <motion.p variants={item} className="max-w-2xl mx-auto mb-6">
+        <motion.p variants={item} className="max-w-2xl mx-auto mb-6 text-lg">
           Sign up with us today and be part of
           Converse mailing list. Get the latest update, news and exclusive
           drop - sent straight to your inbox.

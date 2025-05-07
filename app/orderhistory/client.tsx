@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ChevronDown, ChevronUp, PackageOpen, Truck } from 'lucide-react';
 import { Order } from './page';
 
@@ -131,7 +131,7 @@ export default function OrderHistoryClient({ orders }: { orders: Order[] }) {
         {orders.length === 0 ? (
           <div className="text-center py-12">
             <h2 className="text-xl font-medium mb-2">No orders found</h2>
-            <p className="text-gray-500 mb-6">You haven't placed any orders yet.</p>
+            <p className="text-gray-500 mb-6">You haven&apos;t placed any orders yet.</p>
             <Button asChild>
               <Link href="/products">
                 Start Shopping
