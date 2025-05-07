@@ -1,6 +1,7 @@
 'use client'
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useSearchParams } from 'next/navigation';
 import Link from "next/link";
 import Image from 'next/image';
 import {
@@ -17,7 +18,7 @@ import { useCart } from "../../components/cartService/page";
 
 const PlaceOrderPage = () => {
   const { items, getTotalPrice } = useCart();
-  
+  const paymentMethod = useSearchParams().get('paymentMethod');
   const userAddress = {
     fullName: "John Doe",
     streetAddress: "123 Main Street",
@@ -40,7 +41,10 @@ const PlaceOrderPage = () => {
   if(!items.length) {
     redirect('/cart');
   }
-
+  const formatPrice = (price: number | string): string => {
+    const numPrice = typeof price === 'string' ? parseFloat(price) : price;
+    return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="flex flex-col items-center mb-8">
@@ -79,7 +83,7 @@ const PlaceOrderPage = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                <p className="font-medium">{user.paymentMethod}</p>
+                <p className="font-medium">{paymentMethod}</p>
                 <div className="pt-2">
                   <Link href='/payment'>
                     <Button variant='outline' size="sm">Edit</Button>
@@ -122,7 +126,7 @@ const PlaceOrderPage = () => {
                         {item.quantity}
                       </TableCell>
                       <TableCell className="text-right font-medium">
-                        {item.product.price.toLocaleString()}
+                        ฿ {formatPrice(item.product.price.toLocaleString())}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -141,12 +145,12 @@ const PlaceOrderPage = () => {
             <CardContent className="space-y-4">
               <div className="flex justify-between">
                 <span className="text-gray-600">Subtotal</span>
-                <span className="font-medium">฿{subtotal.toLocaleString()}</span>
+                <span className="font-medium">฿ {subtotal.toLocaleString()}</span>
               </div>
               
               <div className="flex justify-between border-b pb-4">
                 <span className="text-gray-600">Shipping & Handling</span>
-                <span className="font-medium">฿{shippingFee.toLocaleString()}</span>
+                <span className="font-medium">฿ {shippingFee.toLocaleString()}</span>
               </div>
               
               <div className="flex justify-between pt-2">

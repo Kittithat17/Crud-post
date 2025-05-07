@@ -56,7 +56,7 @@ const PaymentMethodForm = ({ paymentMethodType }: { paymentMethodType: string | 
             toast.success("Payment method updated successfully!");
             
             // Redirect to next page
-            router.push('/place-order');
+            router.push(`/place-order?paymentMethod=${encodeURIComponent(selectedPayment)}`);
             
         } catch (error) {
             toast.error("Something went wrong. Please try again.");

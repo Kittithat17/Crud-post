@@ -22,7 +22,7 @@ export default function ShippingForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const res = await fetch('/api/shipping', {
+    const res = await fetch('http://localhost:1337/insertAddress', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

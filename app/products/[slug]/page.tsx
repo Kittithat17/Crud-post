@@ -240,7 +240,7 @@ function SizeSelector({
             }`}
             onClick={() => onSelectSize(size.label)}
           >
-            {size.label}
+            {size.label} US
           </button>
         ))}
       </div>
