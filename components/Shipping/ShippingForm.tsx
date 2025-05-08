@@ -1,12 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation'; 
+import { useAuth } from '@clerk/nextjs';
 
 export default function ShippingForm() {
+  const { userId } = useAuth();
   const [formData, setFormData] = useState({
     fullName: '',
     address: '',
@@ -15,6 +17,7 @@ export default function ShippingForm() {
     country: '',
   });
   const router = useRouter();
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -22,19 +25,33 @@ export default function ShippingForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const res = await fetch('http://localhost:1337/insertAddress', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
+    try {
+      // Add userId to the data sent to the server
+      const dataWithUserId = {
+        ...formData,
+        userId: userId || 'guest' // Use 'guest' as fallback if not logged in
+      };
 
-    if (res.ok) {
-      toast.success("Address updated successfully!");;
-      router.push('/payment');
-    } else {
-      toast.error("Something went wrong, please try again");
+      const res = await fetch('http://localhost:1337/insertAddress', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataWithUserId),
+      });
+
+      if (res.ok) {
+        // Only encode the address part for the URL (no userId)
+        const encodedData = encodeURIComponent(JSON.stringify(formData));
+        toast.success("Address updated successfully!");
+        router.push(`/payment?addressData=${encodedData}`);
+      } else {
+        const errorData = await res.json();
+        toast.error(errorData.message || "Something went wrong, please try again");
+      }
+    } catch (error) {
+      console.error("Error submitting address:", error);
+      toast.error("Connection error, please try again");
     }
   };
 
@@ -47,26 +64,66 @@ export default function ShippingForm() {
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="block text-sm font-medium">Full Name</label>
-            <Input name="fullName" value={formData.fullName} onChange={handleChange} type="text" placeholder="Enter full name" className="mt-1 bg-transparent border-b border-gray-300 focus:border-gray-600 py-5" />
+            <Input 
+              name="fullName" 
+              value={formData.fullName} 
+              onChange={handleChange} 
+              type="text" 
+              placeholder="Enter full name" 
+              required
+              className="mt-1 bg-transparent border-b border-gray-300 focus:border-gray-600 py-5" 
+            />
           </div>
           <div>
             <label className="block text-sm font-medium">Address</label>
-            <Input name="address" value={formData.address} onChange={handleChange} type="text" placeholder="Enter address" className="mt-1 bg-transparent border-b border-gray-300 focus:border-gray-600 py-5" />
+            <Input 
+              name="address" 
+              value={formData.address} 
+              onChange={handleChange} 
+              type="text" 
+              placeholder="Enter address" 
+              required
+              className="mt-1 bg-transparent border-b border-gray-300 focus:border-gray-600 py-5" 
+            />
           </div>
           <div>
             <label className="block text-sm font-medium">City</label>
-            <Input name="city" value={formData.city} onChange={handleChange} type="text" placeholder="Enter city" className="mt-1 bg-transparent border-b border-gray-300 focus:border-gray-600 py-5" />
+            <Input 
+              name="city" 
+              value={formData.city} 
+              onChange={handleChange} 
+              type="text" 
+              placeholder="Enter city" 
+              required
+              className="mt-1 bg-transparent border-b border-gray-300 focus:border-gray-600 py-5" 
+            />
           </div>
           <div>
             <label className="block text-sm font-medium">Postal Code</label>
-            <Input name="postalCode" value={formData.postalCode} onChange={handleChange} type="text" placeholder="Enter postal code" className="mt-1 bg-transparent border-b border-gray-300 focus:border-gray-600 py-5" />
+            <Input 
+              name="postalCode" 
+              value={formData.postalCode} 
+              onChange={handleChange} 
+              type="text" 
+              placeholder="Enter postal code" 
+              required
+              className="mt-1 bg-transparent border-b border-gray-300 focus:border-gray-600 py-5" 
+            />
           </div>
           <div>
             <label className="block text-sm font-medium">Country</label>
-            <Input name="country" value={formData.country} onChange={handleChange} type="text" placeholder="Enter country" className="mt-1 bg-transparent border-b border-gray-300 focus:border-gray-600 py-5" />
+            <Input 
+              name="country" 
+              value={formData.country} 
+              onChange={handleChange} 
+              type="text" 
+              placeholder="Enter country" 
+              required
+              className="mt-1 bg-transparent border-b border-gray-300 focus:border-gray-600 py-5" 
+            />
           </div>
 
-          <Button  className="w-full mt-4 py-5">Confirm</Button>
+          <Button className="w-full mt-4 py-5">Confirm</Button>
         </form>
       </div>
     </div>

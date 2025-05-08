@@ -328,7 +328,10 @@ export default function ProductsTable() {
       toast.error("Failed to delete product!");
     }
   };
-
+  const formatPrice = (price: number | string): string => {
+    const numPrice = typeof price === 'string' ? parseFloat(price) : price;
+    return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Products</h1>
@@ -533,7 +536,7 @@ export default function ProductsTable() {
                 <tr key={product.id?.toString()} className="border-b hover:bg-gray-50">
                   <td className="p-2">{product.id}</td>
                   <td className="p-2">{product.name}</td>
-                  <td className="p-2">{product.price}</td>
+                  <td className="p-2">฿ {formatPrice(product.price)}</td>
                   <td className="p-2">{product.colorName}</td>
                   <td className="p-2">
                     <div className="flex space-x-2">
