@@ -1,36 +1,11 @@
-"use client";
+import { TabsDemo } from "./Try";
 
-import { usePathname, useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-
-
-const tabs = [
-  { name: "Products", path: "/admin/products" },
-  { name: "Orders", path: "/admin/orders" },
-  { name: "Users", path: "/admin/users" },
-];
-
-export default function    AdminMenu() {
-  const router = useRouter();
-  const pathname = usePathname(); // ตรวจสอบ path ปัจจุบัน
-
+export default function AdminMenu() {
   return (
-    <nav className="flex space-x-2  py-6  bg-white justify-between px-32 ">
-      {tabs.map((tab) => (
-        
-        <Button
-          key={tab.path}
-          variant={pathname === tab.path ? "default" : "outline"}
-          onClick={() => router.push(tab.path)}
-          className="rounded-full border-black/70 p-6 font-semibold uppercase"
-          
-        >
-          {tab.name}
-        </Button>
-        
-
-      ))}
-      
-    </nav>
+    <div className="flex flex-col gap-5 px-10 ">
+      <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+      <TabsDemo />
+      <hr />
+    </div>
   );
 }
