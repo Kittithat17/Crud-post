@@ -91,7 +91,7 @@ const Signinbut = () => {
             {/* Only show Admin link if user has admin role */}
             {userRole === 'admin' && (
               <DropdownMenuItem>
-                <Link href="/admin/users">Admin</Link>
+                <Link href="/admin/products">Admin</Link>
               </DropdownMenuItem>
             )}
 

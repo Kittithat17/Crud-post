@@ -7,6 +7,8 @@ import { Slidecard } from "@/components/Autoslide/Slidecard"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import Marquee from "@/components/Marquee"
+import { ScrollAreaHorizontalDemo } from "@/components/Autoslide/scrollslide"
+
 
 const Page = () => {
   // Animation variants
@@ -128,6 +130,9 @@ const Page = () => {
           </Link>
         </motion.div>
       </motion.div>
+      <div>
+       <ScrollAreaHorizontalDemo />
+      </div>
     </div>
   )
 }

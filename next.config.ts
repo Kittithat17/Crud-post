@@ -17,7 +17,30 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'assets.adidas.com',
         pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'photorankmedia-a.akamaihd.net',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'z2photorankmedia-a.akamaihd.net',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.converse.co.th',
+        pathname: '/**'
       }
+      
+      
+      
     ]
   }
 };
