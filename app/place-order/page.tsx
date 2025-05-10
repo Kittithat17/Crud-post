@@ -199,7 +199,7 @@ const PlaceOrderPage = () => {
           <CardContent className="pt-6 text-center">
             <h1 className="text-2xl font-bold text-red-600 mb-4">Shipping Information Missing</h1>
             <p className="mb-6">{error || 'Please provide shipping information to continue.'}</p>
-            <Button onClick={() => router.push('/shipping-address')}>
+            <Button onClick={() => router.push('/address')}>
               Go to Shipping Address
             </Button>
           </CardContent>

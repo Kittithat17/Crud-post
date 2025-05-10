@@ -31,8 +31,8 @@ const sampleSneakers: ProductProps[] = [
         isNew: true,
     },
     {
-      id: "nike-vomero-18",
-      name: "Nike Vomero 18",
+      id: "nike-vomero-dzv",
+      name: "dzvdv",
       subtitle: "Running Shoes",
       price: 5900,
       mainImage: "https://i.ebayimg.com/images/g/kg0AAOSwvnZlS0Dj/s-l1600.webp",
