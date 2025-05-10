@@ -20,16 +20,24 @@ const sampleSneakers: ProductProps[] = [
         name: "Adidas Samba",
         subtitle: "OG Aluminum Gum",
         price: 6400,
-        mainImage: "https://static.nike.com/a/images/w_1280,q_auto,f_auto/a27a438e-3142-4bd1-b504-bd126bafd87c/วันเปิดตัว-air-jordan-1-low-travis-scott-x-fragment.jpg",
+        mainImage: "https://d2cva83hdk3bwc.cloudfront.net/vans-old-skool-pro-black-white-1.jpg",
     },
     {
         id: "nike-vomero-18",
         name: "Nike Vomero 18",
         subtitle: "Running Shoes",
         price: 5900,
-        mainImage: "https://static.nike.com/a/images/w_1280,q_auto,f_auto/a27a438e-3142-4bd1-b504-bd126bafd87c/วันเปิดตัว-air-jordan-1-low-travis-scott-x-fragment.jpg",
+        mainImage: "https://www.converse.co.th/media/catalog/product/cache/8fcecb462959d400cda3532b9c3dc9f0/1/6/162050c_a_08x1.jpg",
         isNew: true,
-    }
+    },
+    {
+      id: "nike-vomero-18",
+      name: "Nike Vomero 18",
+      subtitle: "Running Shoes",
+      price: 5900,
+      mainImage: "https://i.ebayimg.com/images/g/kg0AAOSwvnZlS0Dj/s-l1600.webp",
+      isNew: true,
+  },
 ];
 
 export default function HomePage() {
