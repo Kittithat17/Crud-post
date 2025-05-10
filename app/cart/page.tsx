@@ -53,7 +53,10 @@ const Cart = () => {
       </div>
     );
   }
-
+  const formatPrice = (price: number | string): string => {
+    const numPrice = typeof price === 'string' ? parseFloat(price) : price;
+    return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
   // If cart has items, show cart with items
   return (
     <div className="container mx-auto px-4 py-12 max-w-6xl">
@@ -83,7 +86,7 @@ const Cart = () => {
                       <p >Size {item.selectedSize}</p>
                     </div>
                     <div className="text-right">
-                      <p className="font-semibold">{item.product.price}</p>
+                      <p className="font-semibold">฿ {formatPrice(item.product.price)}</p>
                     </div>
                   </div>
                   
