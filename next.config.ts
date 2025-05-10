@@ -37,6 +37,16 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'www.converse.co.th',
         pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.ebayimg.com',
+        pathname: '/**' 
+      },
+      {
+        protocol: 'https',
+        hostname: 'd2cva83hdk3bwc.cloudfront.net',
+        pathname: '/**' 
       }
       
       

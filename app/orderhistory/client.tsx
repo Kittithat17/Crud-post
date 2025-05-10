@@ -43,11 +43,11 @@ const OrderCard = ({ order }: { order: Order }) => {
     <Card className="mb-6 shadow-md">
       <CardHeader className="flex flex-row justify-between items-center pb-2">
         <div>
-          <h3 className="text-lg font-semibold">Order #{order.id}</h3>
-          <p className="text-sm text-gray-500">{formatDate(order.date)}</p>
+          <h3 className="text-lg font-semibold">Order #{orders.id}</h3>
+          <p className="text-sm text-gray-500">{formatDate(orders.created_at)}</p>
         </div>
         <Badge className={getStatusColor(order.status)}>
-          {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+          {orders.status.charAt(0).toUpperCase() + order.status.slice(1)}
         </Badge>
       </CardHeader>
       
@@ -97,18 +97,18 @@ const OrderCard = ({ order }: { order: Order }) => {
               <div>
                 <h4 className="font-medium mb-2">Shipping Address</h4>
                 <div className="text-sm">
-                  <p>{order.shippingAddress.fullName}</p>
-                  <p>{order.shippingAddress.address}</p>
+                  <p>{orders.full_name}</p>
+                  <p>{orders.address}</p>
                   <p>
-                    {order.shippingAddress.city}, {order.shippingAddress.postalCode}
+                    {orders.city}, {orders.postalCode}
                   </p>
-                  <p>{order.shippingAddress.country}</p>
+                  <p>{orders.country}</p>
                 </div>
               </div>
               
               <div>
                 <h4 className="font-medium mb-2">Payment Method</h4>
-                <p className="text-sm">{order.paymentMethod}</p>
+                <p className="text-sm">{order.payment_method}</p>
               </div>
             </div>
           </div>
