@@ -55,7 +55,7 @@ const OrderCard = ({ order }: { order: Order }) => {
         <div className="flex justify-between items-center">
           <div>
             <p className="font-medium">{order.items.length} {order.items.length === 1 ? 'item' : 'items'}</p>
-            <p className="text-lg font-bold">${order.total.toFixed(2)}</p>
+            <p className="text-lg font-bold">฿ {order.total.toFixed(2)}</p>
           </div>
           <div className="flex items-center">
             {order.status === 'shipped' && <Truck className="w-5 h-5 mr-1" strokeWidth={2.25}/>}
@@ -85,11 +85,11 @@ const OrderCard = ({ order }: { order: Order }) => {
                     <div className="flex-1">
                       <p className="font-medium">{item.name}</p>
                       <p className="text-sm text-gray-500">
-                        Qty: {item.quantity} × ${item.price.toFixed(2)}
+                        Qty: {item.quantity} × ฿ {item.price.toFixed(2)}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="font-medium">${(item.quantity * item.price).toFixed(2)}</p>
+                      <p className="font-medium">฿ {(item.quantity * item.price).toFixed(2)}</p>
                     </div>
                   </div>
                 ))}

@@ -172,7 +172,7 @@ export default function OrderPage() {
                 </div>
               </td>
               <td className="p-2">{formatDate(order.created_at)}</td>
-              <td className="p-2">${Number(order.total_amount).toFixed(2)}</td>
+              <td className="p-2">฿ {Number(order.total_amount).toFixed(2)}</td>
               <td className="p-2">
                 {editingOrderId === order.order_id ? (
                   <div className="relative">
