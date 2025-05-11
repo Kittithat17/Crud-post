@@ -150,7 +150,7 @@ const Cart = () => {
 
 
             
-            <button className="w-full py-3 px-6 border rounded-md flex justify-center items-center bg-amber-300">
+            <button className="w-full py-3 px-6 border rounded-md flex justify-center items-center ">
               <Image 
                 src="/images/paypal.png" 
                 alt="PayPal" 
