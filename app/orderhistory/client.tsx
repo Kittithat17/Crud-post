@@ -74,10 +74,10 @@ const OrderCard = ({ order }: { order: Order }) => {
                 {order.items.map((item) => (
                   <div key={item.id} className="flex items-center pb-2 border-b">
                     <div className="w-12 h-12 bg-gray-200 rounded relative mr-3">
-                      {/* Placeholder for product image */}
-                      <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+                      <img src={item.image}/>
+                      {/* <div className="absolute inset-0 flex items-center justify-center text-gray-500">
                         <span className="text-xs">Image</span>
-                      </div>
+                      </div> */}
                     </div>
                     <div className="flex-1">
                       <p className="font-medium">{item.name}</p>

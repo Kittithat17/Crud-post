@@ -49,11 +49,14 @@ export default async function OrdersPage() {
 // Server-side function to fetch orders
 async function fetchOrders(userId: string) {
   try {
-    const response = await fetch('http://localhost:1337/getOrders', {
+    // Using absolute URL for production compatibility
+    const apiUrl = 'http://localhost:1337';
+    const response = await fetch(`${apiUrl}/getUserOrders`, {
       headers: {
-        'userId': userId
+        'userId': userId,
+        'Content-Type': 'application/json'
       },
-      cache: 'no-store' // Disable caching for fresh data
+      next: { revalidate: 0 }, // Equivalent to cache: 'no-store' in newer Next.js
     });
     
     if (!response.ok) {
@@ -61,6 +64,10 @@ async function fetchOrders(userId: string) {
     }
     
     const data = await response.json();
+    
+    if (!data || data.length === 0) {
+      return []; // Return empty array if no orders found
+    }
     
     // Transform the data to match the Order type
     return data.map((order: any) => ({
