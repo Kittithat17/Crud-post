@@ -2,93 +2,124 @@
 
 import { useState, useEffect } from 'react';
 import { toast } from "sonner";
-interface User {
+
+interface OrderItem {
   id: string;
-  clerk_id: string;
+  product_id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  size: string;
+  image: string;
+}
+
+interface Order {
+  order_id: string;
+  user_id: string;
+  full_name: string;
   email: string;
-  role: string;
+  address: string;
+  city: string;
+  postal_code: string;
+  country: string;
+  payment_method: string;
+  total_amount: number;
+  status: string;
+  created_at: string;
+  items: OrderItem[];
 }
 
 export default function OrderPage() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [selectedRoles, setSelectedRoles] = useState<Record<string, string>>({});
-  const [editingUserId, setEditingUserId] = useState<string | null>(null);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [selectedStatuses, setSelectedStatuses] = useState<Record<string, string>>({});
+  const [editingOrderId, setEditingOrderId] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error,] = useState<string | null>(null);
   const [saving, setSaving] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchUsers();
+    fetchOrders();
   }, []);
 
-  const fetchUsers = async () => {
+  const fetchOrders = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:1337/getUsers');
+      const response = await fetch('http://localhost:1337/getOrders');
       
       if (!response.ok) {
-        throw new Error('Failed to fetch users');
+        throw new Error('Failed to fetch orders');
       }
       
       const data = await response.json();
-      setUsers(data);
+      setOrders(data);
       
-      // Initialize selectedRoles with current roles
-      const initialRoles: Record<string, string> = {};
-      data.forEach((user: User) => {
-        initialRoles[user.clerk_id] = user.role;
+      // Initialize selectedStatuses with current statuses
+      const initialStatuses: Record<string, string> = {};
+      data.forEach((order: Order) => {
+        initialStatuses[order.order_id] = order.status;
       });
-      setSelectedRoles(initialRoles);
-    } catch  {
-      toast.error("Failed to fetch users");
+      setSelectedStatuses(initialStatuses);
+    } catch {
+      toast.error("Failed to fetch orders");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleRoleChange = (clerk_id: string, role: string) => {
-    setSelectedRoles(prev => ({
+  const handleStatusChange = (orderId: string, status: string) => {
+    setSelectedStatuses(prev => ({
       ...prev,
-      [clerk_id]: role
+      [orderId]: status
     }));
   };
 
-  const startEditing = (userId: string) => {
-    setEditingUserId(userId);
+  const startEditing = (orderId: string) => {
+    setEditingOrderId(orderId);
+  };
+  
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-US', {
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(date);
   };
 
-  const saveRole = async (user: User) => {
+  const saveStatus = async (order: Order) => {
     setSaving(true);
     setSuccessMessage(null);
     
     try {
-      const response = await fetch('http://localhost:1337/updateUserRole', {
-        method: 'PUT',
+      const response = await fetch('http://localhost:1337/updateOrderStatus', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          clerk_id: user.clerk_id,
-          role: selectedRoles[user.clerk_id]
+          order_id: order.order_id,
+          status: selectedStatuses[order.order_id]
         }),
       });
       
       if (!response.ok) {
-        throw new Error(`Failed to update role for ${user.email}`);
+        throw new Error(`Failed to update status for Order #${order.order_id}`);
       }
       
-      // Update local user data
-      setUsers(users.map(u => 
-        u.clerk_id === user.clerk_id ? {...u, role: selectedRoles[user.clerk_id]} : u
+      // Update local order data
+      setOrders(orders.map(o => 
+        o.order_id === order.order_id ? {...o, status: selectedStatuses[order.order_id]} : o
       ));
       
-      setSuccessMessage(`Role updated successfully for ${user.email}`);
+      setSuccessMessage(`Status updated successfully for Order #${order.order_id}`);
       
       // Clear editing state
-      setEditingUserId(null);
+      setEditingOrderId(null);
     } catch {
-      toast.error("Failed");
+      toast.error("Failed to update order status");
     } finally {
       setSaving(false);
       
@@ -100,7 +131,7 @@ export default function OrderPage() {
   };
 
   if (loading) {
-    return <div className="p-4">Loading users...</div>;
+    return <div className="p-4">Loading orders...</div>;
   }
 
   if (error) {
@@ -109,7 +140,7 @@ export default function OrderPage() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Users</h1>
+      <h1 className="text-2xl font-bold mb-4">Orders</h1>
       {successMessage && (
         <div className="mb-4 p-2 bg-green-100 text-green-800 rounded">
           {successMessage}
@@ -118,43 +149,65 @@ export default function OrderPage() {
       <table className="w-full border-collapse border text-left">
         <thead>
           <tr className="border-b">
-            <th className="px-20">ID</th>
-            <th className="p-2">EMAIL</th>
-            <th className="p-2">ROLE</th>
+            <th className="p-2">ORDER ID</th>
+            <th className="p-2">CUSTOMER</th>
+            <th className="p-2">ITEMS</th>
+            <th className="p-2">DATE</th>
+            <th className="p-2">TOTAL</th>
+            <th className="p-2">STATUS</th>
             <th className="p-2">ACTIONS</th>
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
-            <tr key={user.id} className="border-b hover:bg-gray-50">
-              <td className="p-2">{user.id}</td>
-              <td className="p-2">{user.email}</td>
+          {orders.map((order) => (
+            <tr key={order.order_id} className="border-b hover:bg-gray-50">
+              <td className="p-2">{order.order_id}</td>
               <td className="p-2">
-                {editingUserId === user.clerk_id ? (
+                <div className="font-medium">{order.full_name}</div>
+                <div className="text-sm text-gray-500">{order.email}</div>
+              </td>
+              <td className="p-2">
+                <div className="text-sm">
+                  {order.items.length} {order.items.length === 1 ? 'item' : 'items'}
+                </div>
+              </td>
+              <td className="p-2">{formatDate(order.created_at)}</td>
+              <td className="p-2">${Number(order.total_amount).toFixed(2)}</td>
+              <td className="p-2">
+                {editingOrderId === order.order_id ? (
                   <div className="relative">
                     <select
-                      value={selectedRoles[user.clerk_id] || user.role}
-                      onChange={(e) => handleRoleChange(user.clerk_id, e.target.value)}
+                      value={selectedStatuses[order.order_id] || order.status}
+                      onChange={(e) => handleStatusChange(order.order_id, e.target.value)}
                       className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     >
-                      <option value="user">User</option>
-                      <option value="admin">Admin</option>
+                      <option value="pending">Pending</option>
+                      <option value="processing">Processing</option>
+                      <option value="shipped">Shipped</option>
+                      <option value="delivered">Delivered</option>
+                      <option value="cancelled">Cancelled</option>
                     </select>
                   </div>
                 ) : (
                   <span
                     className={`px-2 py-1 rounded-full text-xs font-semibold
-                      ${user.role === 'admin' ? 'bg-black text-white' : 'bg-gray-200 text-gray-700'}
+                      ${
+                        order.status === 'delivered' ? 'bg-green-100 text-green-800' :
+                        order.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
+                        order.status === 'processing' ? 'bg-yellow-100 text-yellow-800' :
+                        order.status === 'cancelled' ? 'bg-red-100 text-red-800' :
+                        'bg-gray-100 text-gray-800'
+                      }
                     `}
                   >
-                    {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                    {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                   </span>
                 )}
               </td>
               <td className="p-2 space-x-2">
-                {editingUserId === user.clerk_id ? (
+                {editingOrderId === order.order_id ? (
                   <button 
-                    onClick={() => saveRole(user)} 
+                    onClick={() => saveStatus(order)} 
                     disabled={saving}
                     className="px-3 py-1 bg-green-500 text-white text-sm rounded"
                   >
@@ -162,13 +215,12 @@ export default function OrderPage() {
                   </button>
                 ) : (
                   <button 
-                    onClick={() => startEditing(user.clerk_id)} 
+                    onClick={() => startEditing(order.order_id)} 
                     className="px-3 py-1 bg-white border text-sm rounded"
                   >
                     Edit
                   </button>
                 )}
-                
               </td>
             </tr>
           ))}
