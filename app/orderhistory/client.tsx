@@ -43,11 +43,11 @@ const OrderCard = ({ order }: { order: Order }) => {
     <Card className="mb-6 shadow-md">
       <CardHeader className="flex flex-row justify-between items-center pb-2">
         <div>
-          <h3 className="text-lg font-semibold">Order #{orders.id}</h3>
-          <p className="text-sm text-gray-500">{formatDate(orders.created_at)}</p>
+          <h3 className="text-lg font-semibold">Order #{order.id}</h3>
+          <p className="text-sm text-gray-500">{formatDate(order.created_at)}</p>
         </div>
         <Badge className={getStatusColor(order.status)}>
-          {orders.status.charAt(0).toUpperCase() + order.status.slice(1)}
+          {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
         </Badge>
       </CardHeader>
       
@@ -97,12 +97,12 @@ const OrderCard = ({ order }: { order: Order }) => {
               <div>
                 <h4 className="font-medium mb-2">Shipping Address</h4>
                 <div className="text-sm">
-                  <p>{orders.full_name}</p>
-                  <p>{orders.address}</p>
+                  <p>{order.full_name}</p>
+                  <p>{order.address}</p>
                   <p>
-                    {orders.city}, {orders.postalCode}
+                    {order.city}, {order.postalCode}
                   </p>
-                  <p>{orders.country}</p>
+                  <p>{order.country}</p>
                 </div>
               </div>
               
@@ -114,8 +114,6 @@ const OrderCard = ({ order }: { order: Order }) => {
           </div>
         )}
       </CardContent>
-      
-      {/* CardFooter removed as requested */}
     </Card>
   );
 };

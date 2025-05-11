@@ -1,103 +1,77 @@
-// app/orders/page.tsx - Server Component
-import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import OrderHistoryClient from "./client";
+import { currentUser } from "@clerk/nextjs/server";
 
 // Define the order data types
 export type OrderItem = {
   id: string;
+  product_id: string;
   name: string;
-  quantity: number;
   price: number;
+  quantity: number;
+  size: string;
   image: string;
 };
 
 export type Order = {
   id: string;
-  date: Date;
-  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
-  items: OrderItem[];
+  user_id: string;
+  full_name: string;
+  email: string;
+  address: string;
+  city: string;
+  postalCode: string;
+  country: string;
+  payment_method: string;
   total: number;
-  shippingAddress: {
-    fullName: string;
-    address: string;
-    city: string;
-    postalCode: string;
-    country: string;
-  };
-  paymentMethod: string;
+  status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
+  created_at: Date;
+  items: OrderItem[];
 };
 
-// Mock orders - this will be replaced with actual DB fetching later
-const mockOrders: Order[] = [
-  {
-    id: 'ORD123456',
-    date: new Date('2024-10-01'),
-    status: 'delivered',
-    items: [
-      {
-        id: 'ITEM1',
-        name: 'Wireless Headphones',
-        quantity: 1,
-        price: 99.99,
-        image: '/placeholder-headphones.jpg'
-      },
-      {
-        id: 'ITEM2',
-        name: 'Phone Case',
-        quantity: 2,
-        price: 19.99,
-        image: '/placeholder-case.jpg'
-      }
-    ],
-    total: 139.97,
-    shippingAddress: {
-      fullName: 'Alex Johnson',
-      address: '123 Tech Lane',
-      city: 'San Francisco',
-      postalCode: '94105',
-      country: 'USA'
-    },
-    paymentMethod: 'PayPal'
-  },
-  {
-    id: 'ORD789012',
-    date: new Date('2024-10-10'),
-    status: 'shipped',
-    items: [
-      {
-        id: 'ITEM3',
-        name: 'Smart Watch',
-        quantity: 1,
-        price: 249.99,
-        image: '/placeholder-watch.jpg'
-      }
-    ],
-    total: 249.99,
-    shippingAddress: {
-      fullName: 'Alex Johnson',
-      address: '123 Tech Lane',
-      city: 'San Francisco',
-      postalCode: '94105', 
-      country: 'USA'
-    },
-    paymentMethod: 'CashOnDelivery'
-  }
-];
-
-export default async function OrderHistoryPage() {
-  // Check if user is authenticated
+// This is a Server Component
+export default async function OrdersPage() {
+  // Get the current user from Clerk
   const user = await currentUser();
   
-  // If no user is authenticated, redirect to home page
+  // If no user, redirect to sign-in
   if (!user) {
-    redirect("/");
+    redirect("/sign-in");
   }
   
-  // In the future, fetch orders from your database here
-  // Example: const orders = await db.orders.findMany({ where: { userId: user.id } });
-  const orders = mockOrders;
+  // Fetch orders server-side using the user's ID
+  const orders = await fetchOrders(user.id);
   
-  // Pass the orders to the client component
+  // Pass orders to client component
   return <OrderHistoryClient orders={orders} />;
+}
+
+// Server-side function to fetch orders
+async function fetchOrders(userId: string) {
+  try {
+    const response = await fetch('http://localhost:1337/getOrders', {
+      headers: {
+        'userId': userId
+      },
+      cache: 'no-store' // Disable caching for fresh data
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch orders');
+    }
+    
+    const data = await response.json();
+    
+    // Transform the data to match the Order type
+    return data.map((order: any) => ({
+      ...order,
+      id: order.order_id, // Ensure id is set
+      created_at: new Date(order.created_at),
+      total: Number(order.total_amount), // Set total from total_amount
+      postalCode: order.postal_code // Set postalCode from postal_code
+    }));
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    return []; // Return empty array on error
+  }
 }
