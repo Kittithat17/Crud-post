@@ -348,12 +348,12 @@ export default function ProductsTable() {
         </div>
       )}
 
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={open} onOpenChange={setOpen} >
         <DialogTrigger asChild>
           <Button className="mb-4 py-5" variant="outline">+ Create</Button>
         </DialogTrigger>
 
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-7xl">
           <DialogHeader>
             <DialogTitle>
               {editingProduct ? 'Edit Product' : 'Create New Product'}
@@ -361,7 +361,7 @@ export default function ProductsTable() {
           </DialogHeader>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <Input 
                 placeholder="Name" 
                 name="name"
@@ -401,12 +401,7 @@ export default function ProductsTable() {
                 value={formData.colorName}
                 onChange={handleInputChange}
               />
-              <Input 
-                placeholder="Made In" 
-                name="madeIn"
-                value={formData.madeIn}
-                onChange={handleInputChange}
-              />
+  
               <div className="flex items-center space-x-2">
                 <input
                   type="checkbox"
@@ -415,6 +410,7 @@ export default function ProductsTable() {
                   checked={formData.isNew}
                   onChange={handleInputChange}
                   className="h-4 w-4"
+                
                 />
                 <label htmlFor="isNew">New Product</label>
               </div>
@@ -469,7 +465,7 @@ export default function ProductsTable() {
                 <h3 className="font-medium">Available Sizes</h3>
                 <Button type="button" variant="outline" size="sm" onClick={addSizeField}>
                   Add Size
-                </Button>investin
+                </Button>
               </div>
               {sizes.map((size, index) => (
                 <div key={index} className="grid grid-cols-1 gap-2 items-end">
