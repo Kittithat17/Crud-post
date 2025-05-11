@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { ChevronDown, ChevronUp, PackageOpen, Truck } from 'lucide-react';
+import { ChevronDown, ChevronUp, PackageOpen, Truck, CircleX, Clock, HardHat } from 'lucide-react';
 import { Order } from './page';
 
 // Function to get appropriate status badge color
@@ -58,8 +58,11 @@ const OrderCard = ({ order }: { order: Order }) => {
             <p className="text-lg font-bold">${order.total.toFixed(2)}</p>
           </div>
           <div className="flex items-center">
-            {order.status === 'shipped' && <Truck className="w-5 h-5 mr-1" />}
-            {order.status === 'delivered' && <PackageOpen className="w-5 h-5 mr-1" />}
+            {order.status === 'shipped' && <Truck className="w-5 h-5 mr-1" strokeWidth={2.25}/>}
+            {order.status === 'delivered' && <PackageOpen className="w-5 h-5 mr-1" strokeWidth={2.25} />}
+            {order.status === 'cancelled' && <CircleX className="w-5 h-5 mr-1" color="#000000" strokeWidth={2.25} />}
+            {order.status  === 'pending' && <Clock className="w-5 h-5 mr-1" color="#000000" strokeWidth={2.25} />}
+            {order.status  === 'processing' && <HardHat color="#000000" strokeWidth={2.25} />}
             <Button variant="ghost" onClick={() => setExpanded(!expanded)}>
               {expanded ? <ChevronUp /> : <ChevronDown />}
             </Button>

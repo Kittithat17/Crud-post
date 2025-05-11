@@ -50,13 +50,12 @@ export default async function OrdersPage() {
 async function fetchOrders(userId: string) {
   try {
     // Using absolute URL for production compatibility
-    const apiUrl = 'http://localhost:1337';
-    const response = await fetch(`${apiUrl}/getUserOrders`, {
-      headers: {
-        'userId': userId,
-        'Content-Type': 'application/json'
-      },
-      next: { revalidate: 0 }, // Equivalent to cache: 'no-store' in newer Next.js
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
+    
+    // Using RESTful URL pattern
+    const response = await fetch(`${apiUrl}/${userId}/orders`, {
+      method: 'GET',
+      next: { revalidate: 0 } // Equivalent to cache: 'no-store' in newer Next.js
     });
     
     if (!response.ok) {
