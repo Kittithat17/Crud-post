@@ -29,7 +29,7 @@ interface ProductType {
   subtitle?: string;
   price: number;
   mainImage: string;
-  colors?: number | string[];
+  colors?: string;
   tagline?: string;
   environmentalInfo?: string;
   description?: string;
@@ -225,14 +225,14 @@ export default function ProductsTable() {
         // Filter out empty thumbnails
         thumbnails: thumbnails.filter(thumb => thumb.img).map(thumb => ({
           img: thumb.img,
-          alt: thumb.alt
+          alt: thumb.alt || ''  // Ensure alt is never undefined
         })),
         // Filter out empty sizes
         sizes: sizes.filter(size => size.label).map(size => ({
           label: size.label
         })),
-        // Default to 1 color
-        colors: 1,
+        // Remove colors from payload since we're using colorName
+        // colors: formData.colorName,  <- Remove this line
         price: formData.price
       };
   

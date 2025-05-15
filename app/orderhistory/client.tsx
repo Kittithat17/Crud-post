@@ -39,6 +39,12 @@ const formatDate = (date: Date) => {
 const OrderCard = ({ order }: { order: Order }) => {
   const [expanded, setExpanded] = useState(false);
   
+  // Check if any item has a null product_id (product was deleted)
+  const hasDeletedProduct = order.items.some(item => item.product_id === null);
+  
+  // If a product was deleted, show as cancelled visually (doesn't change actual status in DB)
+  const displayStatus = hasDeletedProduct ? 'cancelled' : order.status;
+  
   return (
     <Card className="mb-6 shadow-md">
       <CardHeader className="flex flex-row justify-between items-center pb-2">
@@ -46,23 +52,30 @@ const OrderCard = ({ order }: { order: Order }) => {
           <h3 className="text-lg font-semibold">Order #{order.id}</h3>
           <p className="text-sm text-gray-500">{formatDate(order.created_at)}</p>
         </div>
-        <Badge className={getStatusColor(order.status)}>
-          {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-        </Badge>
+        <div className="flex flex-col items-end">
+          <Badge className={getStatusColor(displayStatus)}>
+            {displayStatus.charAt(0).toUpperCase() + displayStatus.slice(1)}
+          </Badge>
+          {hasDeletedProduct && order.status !== 'cancelled' && (
+            <span className="text-xs text-red-600 mt-1">
+              (Product unavailable)
+            </span>
+          )}
+        </div>
       </CardHeader>
       
       <CardContent className="py-2">
         <div className="flex justify-between items-center">
           <div>
             <p className="font-medium">{order.items.length} {order.items.length === 1 ? 'item' : 'items'}</p>
-            <p className="text-lg font-bold">฿ {order.total.toFixed(2)}</p>
+            {/* <p className="text-lg font-bold">฿ {order.total_amount.toFixed(2)}</p> */}
           </div>
           <div className="flex items-center">
-            {order.status === 'shipped' && <Truck className="w-5 h-5 mr-1" strokeWidth={2.25}/>}
-            {order.status === 'delivered' && <PackageOpen className="w-5 h-5 mr-1" strokeWidth={2.25} />}
-            {order.status === 'cancelled' && <CircleX className="w-5 h-5 mr-1" color="#000000" strokeWidth={2.25} />}
-            {order.status  === 'pending' && <Clock className="w-5 h-5 mr-1" color="#000000" strokeWidth={2.25} />}
-            {order.status  === 'processing' && <HardHat color="#000000" strokeWidth={2.25} />}
+            {displayStatus === 'shipped' && <Truck className="w-5 h-5 mr-1" strokeWidth={2.25}/>}
+            {displayStatus === 'delivered' && <PackageOpen className="w-5 h-5 mr-1" strokeWidth={2.25} />}
+            {displayStatus === 'cancelled' && <CircleX className="w-5 h-5 mr-1" color="#000000" strokeWidth={2.25} />}
+            {displayStatus === 'pending' && <Clock className="w-5 h-5 mr-1" color="#000000" strokeWidth={2.25} />}
+            {displayStatus === 'processing' && <HardHat color="#000000" strokeWidth={2.25} />}
             <Button variant="ghost" onClick={() => setExpanded(!expanded)}>
               {expanded ? <ChevronUp /> : <ChevronDown />}
             </Button>
@@ -77,13 +90,23 @@ const OrderCard = ({ order }: { order: Order }) => {
                 {order.items.map((item) => (
                   <div key={item.id} className="flex items-center pb-2 border-b">
                     <div className="w-12 h-12 bg-gray-200 rounded relative mr-3">
-                      <img src={item.image}/>
-                      {/* <div className="absolute inset-0 flex items-center justify-center text-gray-500">
-                        <span className="text-xs">Image</span>
-                      </div> */}
+                      {item.image ? (
+                        <img src={item.image} alt={item.name} className="w-full h-full object-cover rounded" />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+                          <span className="text-xs">No Image</span>
+                        </div>
+                      )}
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium">{item.name}</p>
+                      <div className="flex items-center">
+                        <p className="font-medium">{item.name}</p>
+                        {item.product_id === null && (
+                          <Badge variant="outline" className="ml-2 text-xs bg-red-50 text-red-700 border-red-200">
+                            Unavailable
+                          </Badge>
+                        )}
+                      </div>
                       <p className="text-sm text-gray-500">
                         Qty: {item.quantity} × ฿ {item.price.toFixed(2)}
                       </p>
@@ -114,6 +137,15 @@ const OrderCard = ({ order }: { order: Order }) => {
                 <p className="text-sm">{order.payment_method}</p>
               </div>
             </div>
+            
+            {hasDeletedProduct && (
+              <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
+                <p className="text-sm text-red-700">
+                  <strong>Note:</strong> One or more products in this order are no longer available.
+                  {order.status !== 'cancelled' && " This order has been marked as cancelled."}
+                </p>
+              </div>
+            )}
           </div>
         )}
       </CardContent>
