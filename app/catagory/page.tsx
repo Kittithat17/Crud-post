@@ -6,6 +6,7 @@ import { ProductGrid } from "@/components/product-grid";
 import { SortOptions } from "@/components/sort-options";
 import type { ProductProps } from "@/components/product-card";
 
+const URL = "https://webdatabase-ib7z.onrender.com";
 
 const sampleSneakers: ProductProps[] = [
     {
