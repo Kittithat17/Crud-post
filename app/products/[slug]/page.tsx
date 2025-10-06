@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useState} from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -28,15 +28,17 @@ type Product = {
 type PageParams = {
   slug:string
 }
+type ProductPageProps = {
+  params: PageParams;
+  
+};
 
-export default function ProductPage({ params }: { params: PageParams | Promise<PageParams>}) {
-  const resolvedParams = typeof params === 'object' && 'then' in params 
-  ? use(params as Promise<PageParams>) 
-  : params as PageParams;
-  const { slug } = resolvedParams;
+// **CORRECTED COMPONENT SIGNATURE**
+export default function ProductPage({ params }: ProductPageProps) {
+  // Destructure slug directly from params, as it's guaranteed to be PageParams
+  const { slug } = params;
   const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
-
   useEffect(() => {
     const fetchProduct = async () => {
       try {
