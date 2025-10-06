@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { toast } from "sonner";
-
+const URL = "https://webdatabase-ib7z.onrender.com";
 interface OrderItem {
   id: string;
   product_id: string | null;
@@ -46,7 +46,7 @@ export default function OrderPage() {
   const fetchOrders = async (): Promise<void> => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:1337/getOrders');
+      const response = await fetch(`${URL}/getOrders`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch orders');
@@ -99,7 +99,7 @@ export default function OrderPage() {
 
   const updateOrderStatus = async (orderId: string, status: string): Promise<boolean> => {
     try {
-      const response = await fetch('http://localhost:1337/updateOrderStatus', {
+      const response = await fetch(`${URL}/updateOrderStatus`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

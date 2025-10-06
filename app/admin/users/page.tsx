@@ -9,6 +9,8 @@ interface User {
   role: string;
 }
 
+const URL = "https://webdatabase-ib7z.onrender.com";
+
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedRoles, setSelectedRoles] = useState<Record<string, string>>({});
@@ -18,6 +20,7 @@ export default function AdminUsersPage() {
   const [saving, setSaving] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
+ 
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -25,7 +28,7 @@ export default function AdminUsersPage() {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:1337/getUsers');
+      const response = await fetch(`${URL}/getUsers`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch users');
@@ -63,7 +66,7 @@ export default function AdminUsersPage() {
     setSuccessMessage(null);
     
     try {
-      const response = await fetch('http://localhost:1337/updateUserRole', {
+      const response = await fetch(`${URL}/updateUserRole`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -83,7 +83,7 @@ export default function ProductsTable() {
     isNew: false,
     isBestSeller: false
   });
-
+  const URL = "https://webdatabase-ib7z.onrender.com";
   // Fetch products from API with combined table data
   useEffect(() => {
     const fetchProducts = async () => {
@@ -91,7 +91,7 @@ export default function ProductsTable() {
         setLoading(true);
         setError('');
         
-        const response = await fetch('http://localhost:1337/getSneakers');
+        const response = await fetch(`${URL}/getSneakers`);
         
         if (!response.ok) {
           throw new Error(`Error fetching products: ${response.status}`);
@@ -239,7 +239,7 @@ export default function ProductsTable() {
       // If editing, update product
       if (editingProduct && editingProduct.id) {
         // Send to your API endpoint for update
-        const response = await fetch(`http://localhost:1337/editProduct/${editingProduct.id}`, {
+        const response = await fetch(`${URL}/editProduct/${editingProduct.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -252,7 +252,7 @@ export default function ProductsTable() {
         }
         
         // Refetch the products to get updated data
-        const productsResponse = await fetch('http://localhost:1337/getSneakers');
+        const productsResponse = await fetch(`${URL}/getSneakers`);
         if (productsResponse.ok) {
           const updatedProducts = await productsResponse.json();
           setProductList(updatedProducts);
@@ -264,7 +264,7 @@ export default function ProductsTable() {
       // Otherwise create new product
       else {
         // Send to your API endpoint for creation - no ID is sent
-        const response = await fetch('http://localhost:1337/insertSneaker', {
+        const response = await fetch(`${URL}/insertSneaker`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -277,7 +277,7 @@ export default function ProductsTable() {
         }
   
         // Refetch the products to get updated data including relations
-        const productsResponse = await fetch('http://localhost:1337/getSneakers');
+        const productsResponse = await fetch(`${URL}/getSneakers`);
         if (productsResponse.ok) {
           const updatedProducts = await productsResponse.json();
           setProductList(updatedProducts);
@@ -308,7 +308,7 @@ export default function ProductsTable() {
     }
     
     try {
-      const response = await fetch(`http://localhost:1337/deleteProduct/${productId}`, {
+      const response = await fetch(`${URL}/deleteProduct/${productId}`, {
         method: 'DELETE',
       });
       

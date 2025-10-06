@@ -29,6 +29,8 @@ export type Order = {
   items: OrderItem[];
 };
 
+const URL = "https://webdatabase-ib7z.onrender.com";
+
 // This is a Server Component
 export default async function OrdersPage() {
   // Get the current user from Clerk
@@ -50,7 +52,7 @@ export default async function OrdersPage() {
 async function fetchOrders(userId: string) {
   try {
     // Using absolute URL for production compatibility
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || `${URL}`;
     
     // Using RESTful URL pattern
     const response = await fetch(`${apiUrl}/${userId}/orders`, {

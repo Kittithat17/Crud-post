@@ -12,6 +12,8 @@ import Logout from "./Logout";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+const URL = "https://webdatabase-ib7z.onrender.com";
+
 const Signinbut = () => {
   const { user, isLoaded } = useUser();
   const [userRegistered, setUserRegistered] = useState(false);
@@ -25,7 +27,7 @@ const Signinbut = () => {
           console.log("Registering user:", user.id);
           
           // First, try to create the user
-          const response = await fetch('http://localhost:1337/createUsers', {
+          const response = await fetch(`${URL}/createUsers`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -43,7 +45,7 @@ const Signinbut = () => {
             console.log("User registration successful");
             
             // Now fetch the user's role
-            const roleResponse = await fetch(`http://localhost:1337/getUserRole?clerk_id=${user.id}`);
+            const roleResponse = await fetch(`${URL}/getUserRole?clerk_id=${user.id}`);
             
             if (roleResponse.ok) {
               const roleData = await roleResponse.json();

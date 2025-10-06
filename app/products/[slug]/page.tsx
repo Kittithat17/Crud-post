@@ -40,7 +40,7 @@ export default function ProductPage({ params }: { params: PageParams | Promise<P
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`http://localhost:1337/getSneaker/${slug}`);
+        const res = await fetch(`${URL}/getSneaker/${slug}`);
         console.log("Response status:", res.status);
           
         if (!res.ok) {

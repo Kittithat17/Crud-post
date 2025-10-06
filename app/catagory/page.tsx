@@ -55,8 +55,8 @@ export default function HomePage() {
       setIsLoading(true);
       console.log('Fetching sneakers from API...');
       try {
-        console.log('Making request to: http://localhost:1337/getSneakers');
-        const response = await fetch('http://localhost:1337/getSneakers');
+        console.log(`Making request to: ${URL}/getSneakers`);
+        const response = await fetch(`${URL}/getSneakers`);
         console.log('Response status:', response.status);
         
         if (!response.ok) {

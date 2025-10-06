@@ -7,6 +7,8 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation'; 
 import { useAuth } from '@clerk/nextjs';
 
+const URL = "https://webdatabase-ib7z.onrender.com";
+
 export default function ShippingForm() {
   const { userId } = useAuth();
   const [formData, setFormData] = useState({
@@ -32,7 +34,7 @@ export default function ShippingForm() {
         userId: userId || 'guest' // Use 'guest' as fallback if not logged in
       };
 
-      const res = await fetch('http://localhost:1337/insertAddress', {
+      const res = await fetch(`${URL}/insertAddress`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

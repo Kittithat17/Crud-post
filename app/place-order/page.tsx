@@ -44,7 +44,7 @@ interface ClerkUserData {
   } | null;
   imageUrl: string;
 }
-
+const URL = "https://webdatabase-ib7z.onrender.com";
 const PlaceOrderPage = () => {
   const router = useRouter();
   const { items, getTotalPrice, clearCart } = useCart();
@@ -148,7 +148,7 @@ const PlaceOrderPage = () => {
       console.log('Submitting order:', orderData);
       
       // Call your API to create the order
-      const response = await fetch('http://localhost:1337/insertOrder', {
+      const response = await fetch(`${URL}/insertOrder`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
