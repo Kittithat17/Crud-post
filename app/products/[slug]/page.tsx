@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState, use } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState, } from "react";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/components/cartService/page";
@@ -25,19 +25,15 @@ type Product = {
   sizes: { id: string; label: string }[];
 };
 
-type PageParams = {
-  slug:string
-}
 
-export default function ProductPage({ params }: { params: PageParams | Promise<PageParams>}) {
-  const resolvedParams = typeof params === 'object' && 'then' in params 
-  ? use(params as Promise<PageParams>) 
-  : params as PageParams;
-  const { slug } = resolvedParams;
+
+export default function ProductPage() {
+  const { slug } = useParams<{ slug: string }>();  // <-- read from URL
   const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
+    if (!slug) return;
     const fetchProduct = async () => {
       try {
         const res = await fetch(`http://localhost:1337/getSneaker/${slug}`);
