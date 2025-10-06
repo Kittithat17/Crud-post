@@ -14,7 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import Checkoutstep from "@/components/Shipping/Checkoutstep";
-import { redirect } from "next/navigation";
+
 import { useCart } from "../../components/cartService/page";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -53,7 +53,7 @@ const PlaceOrderPage = () => {
   const encodedAddressData = searchParams.get('addressData');
   
   // Use only useUser for authentication - always call this hook
-  const { user, isLoaded, isSignedIn } = useUser();
+  const { user,  isSignedIn } = useUser();
   const typedUser = user as ClerkUserData | null;
   
   // State - always declare all states
@@ -61,7 +61,7 @@ const PlaceOrderPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [shouldRedirect, setShouldRedirect] = useState(false);
+  
   
   // Calculate these values outside of any conditions
   const subtotal = getTotalPrice();
@@ -174,9 +174,13 @@ const PlaceOrderPage = () => {
       
       // Instead of immediate redirect, set state and handle in useEffect
       router.push('/');
-    } catch (error : any) {
-      console.error('Error placing order:', error);
-      toast.error(error.message || 'Failed to place your order. Please try again.');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message || 'Failed to place your order. Please try again.');
+      } else {
+        toast.error('An unknown error occurred. Please try again.');
+      }
+      
     } finally {
       setIsSubmitting(false);
     }
