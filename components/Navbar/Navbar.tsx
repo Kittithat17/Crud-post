@@ -22,7 +22,7 @@ const Navbar = () => {
 
 
         <div className="flex gap-7">
-          {/* <Searchbar /> */}
+          <Searchbar />
           <DarkModee />
           <CartSign />
           <Signinbut />

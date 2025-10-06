@@ -209,13 +209,12 @@ export default function OrderPage() {
             <th className="p-2">ACTIONS</th>
           </tr>
         </thead>
-   
         <tbody>
           {orders.map((order: Order) => {
             const hasNullProduct = order.items.some((item: OrderItem) => item.product_id === null);
             
             return (
-              <tr key={order.order_id} className={'border-b '}>
+              <tr key={order.order_id} className={'border-b bg-red-50'}>
                 <td className="p-2">{order.order_id}</td>
                 <td className="p-2">
                   <div className="font-medium">{order.full_name}</div>

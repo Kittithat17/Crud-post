@@ -71,7 +71,7 @@ async function fetchOrders(userId: string) {
     }
     
     // Transform the data to match the Order type
-    return data.map((order: any) => ({
+    return data.map((order: { order_id: string; created_at: string; total_amount: number; postal_code: string; }) => ({
       ...order,
       id: order.order_id, // Ensure id is set
       created_at: new Date(order.created_at),
