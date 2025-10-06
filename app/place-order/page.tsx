@@ -1,4 +1,5 @@
 'use client'
+import { Suspense } from "react";
 import { useUser } from '@clerk/nextjs';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -18,6 +19,9 @@ import Checkoutstep from "@/components/Shipping/Checkoutstep";
 import { useCart } from "../../components/cartService/page";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 // Define the address type
 interface ShippingAddress {
@@ -45,51 +49,38 @@ interface ClerkUserData {
   imageUrl: string;
 }
 const URL = "https://webdatabase-ib7z.onrender.com";
-const PlaceOrderPage = () => {
+
+function PlaceOrderPageInner() {
   const router = useRouter();
   const { items, getTotalPrice, clearCart } = useCart();
   const searchParams = useSearchParams();
   const paymentMethod = searchParams.get('paymentMethod');
   const encodedAddressData = searchParams.get('addressData');
-  
-  // Use only useUser for authentication - always call this hook
-  const { user,  isSignedIn } = useUser();
+  const { user, isSignedIn } = useUser();
   const typedUser = user as ClerkUserData | null;
-  
-  // State - always declare all states
+
   const [addressData, setAddressData] = useState<ShippingAddress | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
-  
-  // Calculate these values outside of any conditions
+
   const subtotal = getTotalPrice();
-  const shippingFee = 150.00;
+  const shippingFee = 150.0;
   const total = subtotal + shippingFee;
-  
-  // Handle redirects in useEffect, not conditionally in the component body
+
   useEffect(() => {
     if (!isLoading) {
-      if (!paymentMethod) {
-        router.push('/payment');
-      }
-      
-      if (!items.length) {
-        router.push('/cart');
-      }
+      if (!paymentMethod) router.push('/payment');
+      if (!items.length) router.push('/cart');
     }
   }, [isLoading, paymentMethod, items, router]);
-  
-  // Parse the address data from URL - in a separate useEffect
+
   useEffect(() => {
     if (typedUser) {
       console.log("User email:", typedUser.primaryEmailAddress?.emailAddress);
     }
-    
     if (encodedAddressData) {
       try {
-        // Decode and parse the address data from URL
         const decodedData = JSON.parse(decodeURIComponent(encodedAddressData));
         setAddressData(decodedData);
       } catch (error) {
@@ -354,4 +345,10 @@ const PlaceOrderPage = () => {
   );
 }
 
-export default PlaceOrderPage;
+export default function Page() {
+  return (
+    <Suspense fallback={<div className="p-6">Loading…</div>}>
+      <PlaceOrderPageInner />
+    </Suspense>
+  );
+}
