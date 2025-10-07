@@ -17,7 +17,7 @@ const URL = "https://webdatabase-ib7z.onrender.com";
 const Signinbut = () => {
   const { user, isLoaded } = useUser();
   const [userRegistered, setUserRegistered] = useState(false);
-  const [userRole, setUserRole] = useState<string>('user');
+  const [, setUserRole] = useState<string>('user');
   
   useEffect(() => {
     // Once the user is loaded, register them in your database
@@ -91,11 +91,11 @@ const Signinbut = () => {
             </DropdownMenuItem>
 
             {/* Only show Admin link if user has admin role */}
-            {userRole === 'admin' && (
+            
               <DropdownMenuItem>
                 <Link href="/admin/products">Admin</Link>
               </DropdownMenuItem>
-            )}
+          
 
             <DropdownMenuItem>
               <Link href="/address">Address</Link>
