@@ -40,7 +40,7 @@ export default function ProductPageClient({ slug }: { slug: string }) {
 
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`${API}/getSneaker/${slug}`, { cache: "no-store" });
+        const res = await fetch(`https://webdatabase-ib7z.onrender.com/getSneaker/2`, { cache: "no-store" });
         if (!res.ok) {
           console.log("Response status:", res.status);
           router.replace("/404");
